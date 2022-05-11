@@ -8,12 +8,10 @@
     <!-- マッピング定義-->
     <resultMap id="user" type="com.example.joint_development.domain.JointUser">
         <id column="user_id" property="userId"/>
-        <result column="user_name" property="userName"/>
+        <result column="name" property="name"/>
         <result column="email" property="email"/>
         <result column="password" property="password"/>
-        <result column="joint_date" property="jointDate"/>
-        <result column="age" property="age"/>
-        <result column="gender" property="gender"/>
+        <result column="joining_date" property="joiningDate"/>
         <result column="engineer_kinds" property="engineerKinds"/>
         <result column="experience" property="experience"/>
         <result column="introduction" property="introduction"/>
@@ -21,13 +19,13 @@
 
     <!-- ユーザー 1 件 登録 -->
     <insert id ="insertOne">
-        insert into users(user_name,email,password,joint_date,age,gender,engineer_kinds,experience,introduction)
-        values (#{userName},#{email},#{password},#{jointDate},#{age},#{gender},#{engineerKinds},#{experience},#{introduction})
+        insert into users(name,email,password,joining_date,engineer_kinds,experience,introduction)
+        values (#{name},#{email},#{password},#{joiningDate},#{engineerKinds},#{experience},#{introduction})
     </insert>
 
     <!-- ログインユーザー取得-->
-    <select id="finndLoginUser" resultType="JointUser">
-        select * from users where user_id = #{userId}
+    <select id="findLoginUser" resultType="JointUser">
+        select user_id,name,email,password,joining_date,engineer_kinds,experience,introduction from users where user_id = #{userId}
     </select>
 
     <!-- ユーザー複数件取得-->

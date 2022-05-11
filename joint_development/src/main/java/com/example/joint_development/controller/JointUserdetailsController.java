@@ -1,14 +1,14 @@
 package com.example.joint_development.controller;
 
-import com.example.joint_development.domain.JointUser;
-import com.example.joint_development.service.JointUserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.joint_development.domain.JointUser;
+import com.example.joint_development.service.JointUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +22,17 @@ public class JointUserdetailsController {
 
     /** ユーザー詳細情報取得 */
     @GetMapping("/detail")
-    public JointUser getUser(@RequestParam("userId") String userId){
+    public JointUser getUser(@RequestParam("userId") Integer userId){
+
+        //ユーザー1件取得
+        JointUser user=userService.getUserOne(userId);
+
+        return user;
+    }
+    
+    /** ユーザー詳細情報取得 */
+    @GetMapping("/detail")
+    public JointUser getUser(@RequestParam("userId") Integer userId){
 
         //ユーザー1件取得
         JointUser user=userService.getUserOne(userId);
@@ -55,3 +65,4 @@ public class JointUserdetailsController {
         return 0;
     }
 }
+

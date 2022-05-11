@@ -2,10 +2,10 @@ package com.example.joint_development.repository;
 
 import java.util.List;
 
-import com.example.joint_development.domain.JointUser;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import com.example.joint_development.domain.JointUser;
 
 @Mapper
 public interface JointUserMapper {
@@ -14,13 +14,13 @@ public interface JointUserMapper {
     public int insertOne(JointUser user);
 
     /** ログインユーザー取得 */
-    public JointUser finndLoginUser(String userId);
+    public JointUser findLoginUser(String userId);
 
     /** ユーザー情報取得 */
     public List<JointUser> findMany(JointUser user);
 
     /** ユーザー取得（1件） */
-    public JointUser finfOne(@Param("userId")String userId);
+    public JointUser findOne(@Param("userId")Integer userId);
 
     /** パスワード更新 */
     public void updateOne(@Param("userId")String userId,@Param("password")String password);

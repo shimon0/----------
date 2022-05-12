@@ -1,0 +1,28 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper と xml の マッピング -->
+<mapper namespace="com.example.joint_development.repository.ProjectsrMapper">
+
+    <!-- マッピング定義-->
+    <resultMap id="project" type="com.example.joint_development.domain.Projects">
+        <id column="project_id" property="projectId"/>
+        <result column="user_id" property="userId"/>
+        <result column="post_date" property="postDate"/>
+        <result column="team_name" property="teamName"/>
+        <result column="content" property="content"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="frequency_month" property="frequencyMonth"/>
+        <result column="frequency_week" property="frequencyWeek"/>
+        <result column="frequency_date" property="frequencyDate"/>
+    </resultMap>
+
+    <!-- プロジェクト 作成 -->
+    <insert id ="makeProject" useGeneratedKeys="true" keyProperty="projectId">
+        insert into recruitLang(user_id,post_date,post_date,team_name,content,start_date,end_date,frequency_month,frequency_week,frequency_date)
+        values (#{userId},#{postDate},#{teamName},#{teamName},#{content},#{startDate},#{endDate},#{frequencyMonth},#{frequencyWeek},#{frequencyDate})
+    </insert>
+
+</mapper>

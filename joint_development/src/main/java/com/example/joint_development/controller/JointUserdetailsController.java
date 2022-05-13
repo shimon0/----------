@@ -55,5 +55,14 @@ public class JointUserdetailsController {
 
         return 0;
     }
+    
+    /** ログイン情報取得*/
+    @GetMapping("/login")
+    public JointUser getLoginUser(String userId) {
+    	//ログインユーザ情報取得
+    	JointUser user = userService.getLoginUser(userId);
+    	System.out.println(user);
+    	return user;
+    }
 }
 

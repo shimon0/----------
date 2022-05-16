@@ -25,4 +25,9 @@
         values (#{userId},#{postDate},#{teamName},#{teamName},#{content},#{startDate},#{endDate},#{frequencyMonth},#{frequencyWeek},#{frequencyDate})
     </insert>
 
+    <!-- プロジェクト概要-->
+    <select id="findProjectList" resultType="Projects">
+        select * from projects
+    </select>
+
 </mapper>

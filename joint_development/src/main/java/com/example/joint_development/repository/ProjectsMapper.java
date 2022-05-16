@@ -15,4 +15,7 @@ public interface ProjectsMapper {
     /** プロジェクト概要一覧取得 */
     public List<Projects> findProjectList();
 
+    /** プロジェクト詳細1件取得 */
+    public Projects findDetailProject(String projectId);
+
 }

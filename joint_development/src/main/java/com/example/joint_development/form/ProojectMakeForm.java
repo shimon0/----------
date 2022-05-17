@@ -2,14 +2,10 @@ package com.example.joint_development.form;
 
 import java.util.Date;
 
-import com.example.joint_development.domain.RecruitLang;
-
 import lombok.Data;
-
 @Data
-public class ProjectsForm {
-
-    private Integer projectId;
+public class ProojectMakeForm {
+    
     private Integer userId;
     private Date postDate;
     private String teamName;
@@ -19,5 +15,10 @@ public class ProjectsForm {
     private Integer frequencyMonth;
     private Integer frequencyWeek;
     private Integer frequencyDate;
-    private RecruitLang recruitLang;
+    private Integer langCl;
+    private Integer langWeb;
+    private Integer langFr;
+    private Integer langMl;
+    private Integer langQa;
+    
 }

@@ -18,4 +18,5 @@ public class Projects {
     private Integer frequencyWeek;
     private Integer frequencyDate;
     private RecruitLang recruitLang;
+    
 }

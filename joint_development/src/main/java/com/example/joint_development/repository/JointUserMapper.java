@@ -14,7 +14,7 @@ public interface JointUserMapper {
     public int insertOne(JointUser user);
 
     /** ログインユーザー取得 */
-    public JointUser findLoginUser(String userId);
+    public JointUser findLoginUser(String email, String password);
 
     /** ユーザー情報取得 */
     public List<JointUser> findMany(JointUser user);

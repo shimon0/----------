@@ -21,8 +21,8 @@ public class JointUserService {
     }
 
     /** ログインユーザー取得 */
-    public JointUser getLoginUser(String userId){
-        return mapper.findLoginUser(userId);
+    public JointUser getLoginUser(String email, String password){
+        return mapper.findLoginUser(email, password);
     }
 
     /** ユーザー取得 */

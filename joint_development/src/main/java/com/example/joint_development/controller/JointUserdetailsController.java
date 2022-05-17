@@ -1,5 +1,7 @@
 package com.example.joint_development.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +21,10 @@ public class JointUserdetailsController {
     
     @Autowired
     private JointUserService userService;
-
+    
+    @Autowired
+    private HttpSession session;
+    
     /** ユーザー詳細情報取得 */
     @GetMapping("/detail")
     public JointUser getUser(@RequestParam("userId") Integer userId){
@@ -58,11 +63,19 @@ public class JointUserdetailsController {
     
     /** ログイン情報取得*/
     @GetMapping("/login")
-    public JointUser getLoginUser(String userId) {
+    public JointUser getLoginUser(String email, String password) {
     	//ログインユーザ情報取得
-    	JointUser user = userService.getLoginUser(userId);
+    	JointUser user = userService.getLoginUser(email, password);
     	System.out.println(user);
+    	session.setAttribute("user", user);
     	return user;
+    }
+    
+    /**ログアウトする*/
+    @GetMapping("/logout")
+    public int logout() {
+    	session.invalidate();
+    	return 0;
     }
 }
 

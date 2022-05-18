@@ -28,7 +28,9 @@ public class JointUserdetailsController {
     /** ユーザー詳細情報取得 */
     @GetMapping("/detail")
     public JointUser getUser(@RequestParam("userId") Integer userId){
-
+    	if(session.getAttribute("user") == null) {
+    		
+    	}
         //ユーザー1件取得
         JointUser user=userService.getUserOne(userId);
 
@@ -77,5 +79,7 @@ public class JointUserdetailsController {
     	session.invalidate();
     	return 0;
     }
+        
+    
 }
 

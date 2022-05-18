@@ -1,0 +1,30 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper と xml の マッピング -->
+<mapper namespace="com.example.joint_development.repository.BelongsMapper">
+
+    <!-- マッピング定義-->
+    <resultMap id="belongs" type="com.example.joint_development.domain.Belongs">
+        <id column="user_id" property="userId"/>
+        <result column="project_id" property="projectId"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!-- 参加申請 データ登録-->
+    <insert id="recruitLangCount">
+        insert into recruitLang(user_id,project_id,status)
+        values (#{userId},#{projectId},#{status})
+    </insert>
+
+    <!-- ステータス確認 -->
+    <select id="confirmStatus" resultType="Belongs">
+        select status from belongs where where user_id = #{userId} and project_id=#{projectId}
+    </select>
+
+    <!-- ステータス更新 -->
+    <update id="updateStatus">
+        update belongs set status =#{status} where user_id =#{userId} and project_id=#{projectId}
+    </update>
+</mapper>

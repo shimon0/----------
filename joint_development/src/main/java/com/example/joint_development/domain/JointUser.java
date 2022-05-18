@@ -14,4 +14,6 @@ public class JointUser {
     private String engineerKinds;
     private String experience;
     private String introduction;
+    
+    
 }

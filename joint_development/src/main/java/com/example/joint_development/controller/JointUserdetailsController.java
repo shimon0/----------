@@ -3,13 +3,18 @@ package com.example.joint_development.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.joint_development.domain.JointUser;
+import com.example.joint_development.domain.LoginUser;
+import com.example.joint_development.form.LoginForm;
 import com.example.joint_development.service.JointUserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +29,12 @@ public class JointUserdetailsController {
     
     @Autowired
     private HttpSession session;
+    
+    
+    @ModelAttribute
+    public LoginForm setupLoginForm() {
+    	return new LoginForm();
+    }
     
     /** ユーザー詳細情報取得 */
     @GetMapping("/detail")
@@ -66,10 +77,18 @@ public class JointUserdetailsController {
     
     /** ログイン情報取得*/
     @GetMapping("/login")
-    public JointUser getLoginUser(String email, String password) {
+    public JointUser getLoginUser(@Validated LoginForm form, BindingResult result) {
+    	if(result.hasErrors()) {
+    		//入力値エラーの際の処理を書く
+    		
+    	}
+    	LoginUser loginUser = new LoginUser();
+    	loginUser.setEmail(form.getEmail());
+    	loginUser.setPassword(form.getPassword());
+    	
     	//ログインユーザ情報取得
-    	JointUser user = userService.getLoginUser(email, password);
-    	System.out.println(user);
+    	JointUser user = userService.getLoginUser(loginUser.getEmail(), loginUser.getPassword());
+    	System.out.println();
     	session.setAttribute("user", user);
     	return user;
     }

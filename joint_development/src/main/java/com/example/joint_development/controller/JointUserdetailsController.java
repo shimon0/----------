@@ -29,6 +29,7 @@ public class JointUserdetailsController {
     @GetMapping("/detail")
     public JointUser getUser(@RequestParam("userId") Integer userId){
     	if(session.getAttribute("user") == null) {
+    		//ログインしていなかった場合の処理を書く
     		
     	}
         //ユーザー1件取得

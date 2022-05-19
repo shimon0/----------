@@ -30,15 +30,6 @@ public class JointUserdetailsController {
         return user;
     }
     
-    /** ユーザー詳細情報取得 */
-    @GetMapping("/detail")
-    public JointUser getUser(@RequestParam("userId") Integer userId){
-
-        //ユーザー1件取得
-        JointUser user=userService.getUserOne(userId);
-
-        return user;
-    }
 
     /** パスワード更新 */
     @PostMapping("/password")

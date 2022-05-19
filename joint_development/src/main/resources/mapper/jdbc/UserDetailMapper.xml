@@ -3,10 +3,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- Mapper と xml の マッピング -->
-<mapper namespace="com.example.joint_development.repository.JointUserMapper">
+<mapper namespace="com.example.joint_development.repository.UserDetailMapper">
 
     <!-- マッピング定義-->
-    <resultMap id="user" type="com.example.joint_development.domain.JointUser">
+    <resultMap id="user" type="com.example.joint_development.domain.UserDetail">
         <id column="user_id" property="userId"/>
         <result column="name" property="name"/>
         <result column="email" property="email"/>
@@ -18,37 +18,19 @@
     </resultMap>
 
     <!-- ユーザー 1 件 登録 -->
-    <insert id ="insertOne">
+    <insert id ="insertOne" useGeneratedKeys="true" keyProperty="userId">
         insert into users(name,email,password,joining_date,engineer_kinds,experience,introduction)
         values (#{name},#{email},#{password},#{joiningDate},#{engineerKinds},#{experience},#{introduction})
     </insert>
+    
+    <insert id ="insertLang">
+        insert into otherAvailableLang(user_id,lang_other1,lang_other2,lang_other3,lang_other4,lang_other5,lang_other6,lang_other7,lang_other8,lang_other9,lang_other10,lang_other11,lang_other12,lang_other13,lang_other14,lang_other15,lang_other16,lang_other17,lang_other18,lang_other19,lang_other20)
+        values (#{userId},#{langOther1},#{langOther2},#{langOther3},#{langOther4},#{langOther5},#{langOther6},#{langOther7},#{langOther8},#{langOther9},#{langOther10},#{langOther11},#{langOther12},#{langOther13},#{langOther14},#{langOther15},#{langOther16},#{langOther17},#{langOther18},#{langOther19},#{langOther20})
+    </insert>
 
-    <!-- ログインユーザー取得-->
-    <select id="findLoginUser" resultType="JointUser">
-        select user_id,name,email,password,joining_date,engineer_kinds,experience,introduction from users where user_id = #{userId}
-    </select>
-
-    <!-- ユーザー複数件取得-->
-    <select id="findMany" resultType="JointUser">
-        select * from users
-        <where>
-            <if test="userId !=null">
-                user_id like '%' || #{userId} '%'
-            </if>
-        </where>
-    </select>
     <!-- ユーザー1件検索-->
     <select id="findOne" resultMap="user">
         select * from users where user_id = #{userId} 
     </select>
 
-    <!-- パスワード更新-->
-    <update id="updateOne">
-        update users set password = #{password} where user_id=#{userId}
-    </update>
-
-    <!-- ユーザー1件削除-->
-    <delete id="deleteOne">
-        delete from users where user_id =#{userId}
-    </delete>
 </mapper>

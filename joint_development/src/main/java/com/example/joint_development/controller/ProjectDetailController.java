@@ -19,21 +19,15 @@ public class ProjectDetailController {
     @Autowired
     private BelongsService belongsService;
 
-    /** 参加申請 データ登録 */
-    @PostMapping("/join")
-    public void joinProject(int userId,int projectId){
-        belongsService.joinProject(userId, projectId);
-    }
-
     /** ステータス確認 */
     @GetMapping("/getStatus")
     public String confirmStatus(int userId,int projectId){
         return belongsService.confirmStatus(userId, projectId);
     }
 
-    /** ステータス更新 */
-    @PostMapping("/updateStatus")
-    public void updateStatus(Belongs belongs){
+    /** 参加申請orステータス更新 */
+    @PostMapping("/upsert")
+    public void upsert(Belongs belongs){
         belongsService.updateStatus(belongs);
     }
 }

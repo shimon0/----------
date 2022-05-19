@@ -14,17 +14,12 @@ public class BelongsService {
     @Autowired
     private BelongsMapper belongsMapper;
 
-    /** 参加申請 データ登録 */
-    public void joinProject(int userId,int projectId){
-        belongsMapper.joinProject(userId, projectId);
-    }
-
     /** ステータス確認 */
     public String confirmStatus(int userId,int projectId){
         return belongsMapper.confirmStatus(userId, projectId);
     }
 
-    /** ステータス更新 */
+    /** 参加申請orステータス更新 */
     public void updateStatus(Belongs belongs){
         belongsMapper.updateStatus(belongs);
     }

@@ -12,19 +12,17 @@
         <result column="status" property="status"/>
     </resultMap>
 
-    <!-- 参加申請 データ登録-->
-    <insert id="recruitLangCount">
-        insert into recruitLang(user_id,project_id,status)
-        values (#{userId},#{projectId},#{status})
-    </insert>
-
     <!-- ステータス確認 -->
     <select id="confirmStatus" resultType="Belongs">
         select status from belongs where where user_id = #{userId} and project_id=#{projectId}
     </select>
 
-    <!-- ステータス更新 -->
-    <update id="updateStatus">
-        update belongs set status =#{status} where user_id =#{userId} and project_id=#{projectId}
-    </update>
+    <!-- 参加申請orステータス更新 -->
+    <insert id="updateStatus">
+        insert into belongs (user_id,project_id,status)
+        values(#{userId},#{projectId},#{status})
+        ON CONFLICT (user_id,project_id)
+        do update set
+        status = #{status}
+    </insert>
 </mapper>

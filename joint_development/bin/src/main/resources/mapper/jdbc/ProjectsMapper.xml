@@ -21,7 +21,7 @@
     </resultMap>
 
     <!-- マッピング定義（recruitLang）-->
-    <resultMap id="recruitLang" type="com.example.joint_development.domain.RecruitLang">
+    <resultMap id="recruitLang" type="com.example.joint_development.domain.recruitLang">
         <id column="project_id" property="projectId"/>
         <result column="lang_cl" property="langCl"/>
         <result column="lang_web" property="langWeb"/>

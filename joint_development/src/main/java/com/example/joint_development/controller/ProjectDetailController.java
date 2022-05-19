@@ -25,7 +25,8 @@ public class ProjectDetailController {
         return belongsService.confirmStatus(userId, projectId);
     }
 
-    /** 参加申請orステータス更新 */
+    /** upsert処理
+     *  参加申請orステータス更新 */
     @PostMapping("/upsert")
     public void upsert(Belongs belongs){
         belongsService.updateStatus(belongs);

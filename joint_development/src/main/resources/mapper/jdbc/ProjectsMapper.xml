@@ -17,17 +17,24 @@
         <result column="frequency_month" property="frequencyMonth"/>
         <result column="frequency_week" property="frequencyWeek"/>
         <result column="frequency_date" property="frequencyDate"/>
-        <collection property="recruitLang" resultMap="recruitLang"></collection> 
+        <association property="recruitLang" resultMap="recruitLang"></association>
+        <collection property="projectUserList" resultMap="projectUserList"></collection>
     </resultMap>
 
     <!-- マッピング定義（recruitLang）-->
-    <resultMap id="recruitLang" type="com.example.joint_development.domain.recruitLang">
+    <resultMap id="recruitLang" type="com.example.joint_development.domain.RecruitLang">
         <id column="project_id" property="projectId"/>
         <result column="lang_cl" property="langCl"/>
         <result column="lang_web" property="langWeb"/>
         <result column="lang_fr" property="langFr"/>
         <result column="lang_ml" property="langMl"/>
         <result column="lang_qa" property="langQa"/>
+    </resultMap>
+
+    <!-- マッピング定義（projectUserList）-->
+    <resultMap id="projectUserList" type="com.example.joint_development.domain.ProjectUser">
+        <id column="user_id" property="userId"/>
+        <result column="name" property="name"/>
     </resultMap>
 
     <!-- プロジェクト 作成 -->
@@ -46,11 +53,15 @@
         select 
         projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,
         projects.start_date,projects.end_date,projects.frequency_month,projects.frequency_week,projects.frequency_date,
-        recruitLang.lang_cl,recruitLang.lang_web,recruitLang.lang_fr,recruitLang.lang_ml,recruitLang.lang_qa 
+        recruitLang.lang_cl,recruitLang.lang_web,recruitLang.lang_fr,recruitLang.lang_ml,recruitLang.lang_qa
+        users.user_id,users.name 
         from projects 
         join recruitLang on projects.project_id = recruitLang.project_id
+        join belongs on projects.project_id = belongs.project_id
+        join users on belongs.user_id= users.user_id
         where
         projects.project_id=#{projectId}
+        belongs.status =='BELONGS'
     </select>
 
 </mapper>

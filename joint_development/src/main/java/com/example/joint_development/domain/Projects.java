@@ -1,6 +1,7 @@
 package com.example.joint_development.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -18,5 +19,6 @@ public class Projects {
     private Integer frequencyWeek;
     private Integer frequencyDate;
     private RecruitLang recruitLang;
+    private List<ProjectUser> projectUserList;
     
 }

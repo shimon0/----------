@@ -28,4 +28,14 @@ public class FindProjectController {
     public List<Projects> findProjectList(){
         return projectsService.findProjectList();
     }
+
+    /**
+     * プロジェクト詳細取得
+     * @param projectId
+     * @return
+     */
+    @GetMapping("/detail")
+    public Projects findDetailProject(int projectId){
+        return projectsService.findDetailProject(projectId);
+    }
 }

@@ -25,4 +25,9 @@ public class ProjectsService {
     public List<Projects> findProjectList(){
         return projectsMapper.findProjectList();
     }
+
+    /** プロジェクト詳細1件 */
+    public Projects findDetailProject(int projectId){
+        return projectsMapper.findDetailProject(projectId);
+    }
 }

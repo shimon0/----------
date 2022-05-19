@@ -16,6 +16,6 @@ public interface ProjectsMapper {
     public List<Projects> findProjectList();
 
     /** プロジェクト詳細1件取得 */
-    public Projects findDetailProject(String projectId);
+    public Projects findDetailProject(int projectId);
 
 }

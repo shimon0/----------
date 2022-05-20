@@ -12,9 +12,8 @@ public class ProojectMakeForm {
     private String content;
     private Date startDate;
     private Date endDate;
-    private Integer frequencyMonth;
-    private Integer frequencyWeek;
-    private Integer frequencyDate;
+    private String frequencyMonthOrWeek;
+    private Integer frequencyDay;
     private Integer langCl;
     private Integer langWeb;
     private Integer langFr;

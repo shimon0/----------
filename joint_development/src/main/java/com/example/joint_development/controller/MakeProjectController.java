@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,7 @@ public class MakeProjectController {
      * @return
      */
     @PostMapping("/insert")
-    public int makeProject(@Validated ProojectMakeForm form,BindingResult bindingResult){
+    public int makeProject(@Validated @RequestBody ProojectMakeForm form,BindingResult bindingResult){
         
         if (bindingResult.hasErrors()) {
             return 1;
@@ -45,7 +46,7 @@ public class MakeProjectController {
         Projects projects=modelMapper.map(form, Projects.class);
         RecruitLang recruitLang=modelMapper.map(form, RecruitLang.class);
 
-        recruitLang.setProjectId(projectsService.makeProject(projects)); ;
+        recruitLang.setProjectId(projectsService.makeProject(projects));
         recruitLangService.recruitLangCount(recruitLang);
         
         return 0;

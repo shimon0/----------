@@ -18,7 +18,8 @@ public class ProjectsService {
 
     /** プロジェクト作成 */
     public int makeProject(Projects projects){
-        return projectsMapper.makeProject(projects);
+        projectsMapper.makeProject(projects);
+        return projectsMapper.searchPId();
     }
 
     /** プロジェクト概要一覧取得 */

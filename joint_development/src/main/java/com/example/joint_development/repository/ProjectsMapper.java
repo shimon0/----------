@@ -10,12 +10,15 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ProjectsMapper {
     
     /** プロジェクト作成 */
-    public int makeProject(Projects projects);
+    public void makeProject(Projects projects);
+
+    /** 最新プロジェクトID検索 */
+    public int searchPId();
 
     /** プロジェクト概要一覧取得 */
     public List<Projects> findProjectList();
 
     /** プロジェクト詳細1件取得 */
-    public Projects findDetailProject(String projectId);
+    public Projects findDetailProject(int projectId);
 
 }

@@ -14,10 +14,10 @@
         <result column="content" property="content"/>
         <result column="start_date" property="startDate"/>
         <result column="end_date" property="endDate"/>
-        <result column="frequency_month" property="frequencyMonth"/>
-        <result column="frequency_week" property="frequencyWeek"/>
-        <result column="frequency_date" property="frequencyDate"/>
-        <collection property="recruitLang" resultMap="recruitLang"></collection> 
+        <result column="frequency_month_or_week" property="frequencyMonthOrWeek"/>
+        <result column="frequency_day" property="frequencyDay"/>
+        <association property="recruitLang" resultMap="recruitLang"></association>
+        <collection property="projectUserList" resultMap="projectUserList"></collection>
     </resultMap>
 
     <!-- マッピング定義（recruitLang）-->
@@ -30,27 +30,43 @@
         <result column="lang_qa" property="langQa"/>
     </resultMap>
 
+    <!-- マッピング定義（projectUserList）-->
+    <resultMap id="projectUserList" type="com.example.joint_development.domain.ProjectUser">
+        <id column="user_id" property="userId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
     <!-- プロジェクト 作成 -->
-    <insert id ="makeProject" useGeneratedKeys="true" keyProperty="projectId">
-        insert into recruitLang(user_id,post_date,post_date,team_name,content,start_date,end_date,frequency_month,frequency_week,frequency_date)
-        values (#{userId},#{postDate},#{teamName},#{teamName},#{content},#{startDate},#{endDate},#{frequencyMonth},#{frequencyWeek},#{frequencyDate})
+    <insert id ="makeProject" useGeneratedKeys="true" keyColumn="project_id" keyProperty="projectId">
+        insert into projects(user_id,post_date,team_name,content,start_date,end_date,frequency_month_or_week,frequency_day)
+        values (#{userId},CURRENT_DATE,#{teamName},#{content},#{startDate},#{endDate},#{frequencyMonthOrWeek},#{frequencyDay})
     </insert>
+
+    <!-- 最新プロジェクトID検索-->
+    <select id="searchPId" resultType="int">
+        select max(project_id) from projects
+    </select>
 
     <!-- プロジェクト概要-->
     <select id="findProjectList" resultType="Projects">
-        select * from projects
+        select * from projects oreder by project_id desc
     </select>
 
     <!-- プロジェクト詳細1件取得 -->
     <select id="findDetailProject" resultMap="project">
         select 
         projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,
-        projects.start_date,projects.end_date,projects.frequency_month,projects.frequency_week,projects.frequency_date,
-        recruitLang.lang_cl,recruitLang.lang_web,recruitLang.lang_fr,recruitLang.lang_ml,recruitLang.lang_qa 
+        projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
+        recruitLang.lang_cl,recruitLang.lang_web,recruitLang.lang_fr,recruitLang.lang_ml,recruitLang.lang_qa,
+        users.user_id,users.name 
         from projects 
         join recruitLang on projects.project_id = recruitLang.project_id
-        where
+        join belongs on projects.project_id = belongs.project_id
+        join users on belongs.user_id= users.user_id
+        where 
         projects.project_id=#{projectId}
+        AND
+        belongs.status ='belongs'
     </select>
 
 </mapper>

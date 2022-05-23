@@ -1,0 +1,34 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper と xml の マッピング -->
+<mapper namespace="com.example.joint_development.repository.BelongsMapper">
+
+    <!-- マッピング定義-->
+    <resultMap id="belongs" type="com.example.joint_development.domain.Belongs">
+        <id column="user_id" property="userId"/>
+        <result column="project_id" property="projectId"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!-- 新規作成時のリーダー登録 -->
+    <insert id="newProjectReader">
+        insert into belongs (user_id,project_id,status)
+        values(#{userId},#{projectId},'belongs')
+    </insert>
+
+    <!-- ステータス確認 -->
+    <select id="confirmStatus" resultType="Belongs">
+        select status from belongs where user_id = #{userId} and project_id=#{projectId}
+    </select>
+
+    <!-- 参加申請orステータス更新 -->
+    <insert id="updateStatus">
+        insert into belongs (user_id,project_id,status)
+        values(#{userId},#{projectId},#{status})
+        ON CONFLICT (user_id,project_id)
+        do update set
+        status = #{status}
+    </insert>
+</mapper>

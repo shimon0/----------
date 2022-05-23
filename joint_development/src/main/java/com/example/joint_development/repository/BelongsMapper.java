@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BelongsMapper {
 
+    /** 新規作成時のリーダー登録 */
+    public void newProjectReader(int userId,int projectId);
+
     /** ステータス確認 */
     public String confirmStatus(int userId,int projectId);
 

@@ -14,6 +14,11 @@ public class BelongsService {
     @Autowired
     private BelongsMapper belongsMapper;
 
+    /** 新規作成時のリーダー登録 */
+    public void newProjectReader(int userId,int projectId){
+        belongsMapper.newProjectReader(userId, projectId);
+    };
+
     /** ステータス確認 */
     public String confirmStatus(int userId,int projectId){
         return belongsMapper.confirmStatus(userId, projectId);

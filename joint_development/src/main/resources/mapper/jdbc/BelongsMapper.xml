@@ -12,9 +12,15 @@
         <result column="status" property="status"/>
     </resultMap>
 
+    <!-- 新規作成時のリーダー登録 -->
+    <insert id="newProjectReader">
+        insert into belongs (user_id,project_id,status)
+        values(#{userId},#{projectId},'belongs')
+    </insert>
+
     <!-- ステータス確認 -->
     <select id="confirmStatus" resultType="Belongs">
-        select status from belongs where where user_id = #{userId} and project_id=#{projectId}
+        select status from belongs where user_id = #{userId} and project_id=#{projectId}
     </select>
 
     <!-- 参加申請orステータス更新 -->

@@ -3,6 +3,7 @@ package com.example.joint_development.controller;
 import com.example.joint_development.domain.Projects;
 import com.example.joint_development.domain.RecruitLang;
 import com.example.joint_development.form.ProojectMakeForm;
+import com.example.joint_development.service.BelongsService;
 import com.example.joint_development.service.ProjectsService;
 import com.example.joint_development.service.RecruitLangService;
 
@@ -28,6 +29,9 @@ public class MakeProjectController {
     private RecruitLangService recruitLangService;
 
     @Autowired
+    private BelongsService belongsService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     /**
@@ -42,12 +46,17 @@ public class MakeProjectController {
         if (bindingResult.hasErrors()) {
             return 1;
         }
-        //formを各domainに変更
+        //formを各domain形式に変更
         Projects projects=modelMapper.map(form, Projects.class);
         RecruitLang recruitLang=modelMapper.map(form, RecruitLang.class);
 
-        recruitLang.setProjectId(projectsService.makeProject(projects));
+        //DBにプロジェクト登録
+        int projectId=projectsService.makeProject(projects);
+        recruitLang.setProjectId(projectId);
         recruitLangService.recruitLangCount(recruitLang);
+
+        //belongsテーブルに登録
+        belongsService.newProjectReader(form.getUserId(), projectId);
         
         return 0;
     }

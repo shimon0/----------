@@ -49,23 +49,24 @@
 
     <!-- プロジェクト概要-->
     <select id="findProjectList" resultType="Projects">
-        select * from projects
+        select * from projects oreder by project_id desc
     </select>
 
     <!-- プロジェクト詳細1件取得 -->
     <select id="findDetailProject" resultMap="project">
         select 
         projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,
-        projects.start_date,projects.end_date,projects.frequency_month,projects.frequency_week,projects.frequency_date,
-        recruitLang.lang_cl,recruitLang.lang_web,recruitLang.lang_fr,recruitLang.lang_ml,recruitLang.lang_qa
+        projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
+        recruitLang.lang_cl,recruitLang.lang_web,recruitLang.lang_fr,recruitLang.lang_ml,recruitLang.lang_qa,
         users.user_id,users.name 
         from projects 
         join recruitLang on projects.project_id = recruitLang.project_id
         join belongs on projects.project_id = belongs.project_id
         join users on belongs.user_id= users.user_id
-        where
+        where 
         projects.project_id=#{projectId}
-        belongs.status =='BELONGS'
+        AND
+        belongs.status ='belongs'
     </select>
 
 </mapper>

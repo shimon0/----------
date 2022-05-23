@@ -6,14 +6,14 @@ import lombok.Data;
 
 @Data
 public class JointUser {
-    private Integer userId;
-    private String name;
-    private String email;
-    private String password;
-    private Date joiningDate;
-    private String engineerKinds;
-    private String experience;
-    private String introduction;
-    
-    
+	private String userId;
+	private String userName;
+	private String email;
+	private String password;
+	private Date jointDate;
+	private Integer age;
+	private Integer gender;
+	private Integer engineerKinds;
+	private Integer experience;
+	private String introduction;
 }

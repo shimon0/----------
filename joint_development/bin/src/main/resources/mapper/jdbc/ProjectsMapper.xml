@@ -1,0 +1,56 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper と xml の マッピング -->
+<mapper namespace="com.example.joint_development.repository.ProjectsrMapper">
+
+    <!-- マッピング定義-->
+    <resultMap id="project" type="com.example.joint_development.domain.Projects">
+        <id column="project_id" property="projectId"/>
+        <result column="user_id" property="userId"/>
+        <result column="post_date" property="postDate"/>
+        <result column="team_name" property="teamName"/>
+        <result column="content" property="content"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="frequency_month" property="frequencyMonth"/>
+        <result column="frequency_week" property="frequencyWeek"/>
+        <result column="frequency_date" property="frequencyDate"/>
+        <collection property="recruitLang" resultMap="recruitLang"></collection> 
+    </resultMap>
+
+    <!-- マッピング定義（recruitLang）-->
+    <resultMap id="recruitLang" type="com.example.joint_development.domain.recruitLang">
+        <id column="project_id" property="projectId"/>
+        <result column="lang_cl" property="langCl"/>
+        <result column="lang_web" property="langWeb"/>
+        <result column="lang_fr" property="langFr"/>
+        <result column="lang_ml" property="langMl"/>
+        <result column="lang_qa" property="langQa"/>
+    </resultMap>
+
+    <!-- プロジェクト 作成 -->
+    <insert id ="makeProject" useGeneratedKeys="true" keyProperty="projectId">
+        insert into recruitLang(user_id,post_date,post_date,team_name,content,start_date,end_date,frequency_month,frequency_week,frequency_date)
+        values (#{userId},#{postDate},#{teamName},#{teamName},#{content},#{startDate},#{endDate},#{frequencyMonth},#{frequencyWeek},#{frequencyDate})
+    </insert>
+
+    <!-- プロジェクト概要-->
+    <select id="findProjectList" resultType="Projects">
+        select * from projects
+    </select>
+
+    <!-- プロジェクト詳細1件取得 -->
+    <select id="findDetailProject" resultMap="project">
+        select 
+        projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,
+        projects.start_date,projects.end_date,projects.frequency_month,projects.frequency_week,projects.frequency_date,
+        recruitLang.lang_cl,recruitLang.lang_web,recruitLang.lang_fr,recruitLang.lang_ml,recruitLang.lang_qa 
+        from projects 
+        join recruitLang on projects.project_id = recruitLang.project_id
+        where
+        projects.project_id=#{projectId}
+    </select>
+
+</mapper>

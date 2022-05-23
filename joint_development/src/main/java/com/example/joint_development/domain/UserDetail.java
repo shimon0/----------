@@ -15,5 +15,6 @@ public class UserDetail {
     private String experience;
     private String introduction;
     private List<String>otherAvailableLang;
+
     
 }

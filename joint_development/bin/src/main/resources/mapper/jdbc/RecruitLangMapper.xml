@@ -1,0 +1,23 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper と xml の マッピング -->
+<mapper namespace="com.example.joint_development.repository.RecruitLangMapper">
+
+    <!-- マッピング定義-->
+    <resultMap id="project" type="com.example.joint_development.domain.RecruitLang">
+        <id column="project_id" property="projectId"/>
+        <result column="lang_cl" property="langCl"/>
+        <result column="lang_web" property="langWeb"/>
+        <result column="lang_fr" property="langFr"/>
+        <result column="lang_ml" property="langMl"/>
+        <result column="lang_qa" property="langQa"/>
+    </resultMap>
+
+    <!-- エンジニアタイプの募集人数　登録-->
+    <insert id="recruitLangCount">
+        insert into recruitLang(user_id,post_date,post_date,team_name,frequency_date)
+        values (#{userId},#{postDate},#{teamName},#{teamName},#{content},#{frequencyWeek},#{frequencyDate})
+    </insert>
+</mapper>

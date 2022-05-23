@@ -1,0 +1,56 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper と xml の マッピング -->
+<mapper namespace="com.example.jointDevelopment.repository.UserMapper">
+
+    <!-- マッピング定義-->
+    <resultMap id="user" type="com.example.jointDevelopment.domain.user.model.JointUser">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="joint_date" property="jointDate"/>
+        <result column="age" property="age"/>
+        <result column="gender" property="gender"/>
+        <result column="engineer_kinds" property="engineerKinds"/>
+        <result column="experience" property="experience"/>
+        <result column="introduction" property="introduction"/>
+    </resultMap>
+
+    <!-- ユーザー 1 件 登録 -->
+    <insert id ="insertOne">
+        insert into users(user_name,email,password,joint_date,age,gender,engineer_kinds,experience,introduction)
+        values (#{userName},#{email},#{password},#{jointDate},#{age},#{gender},#{engineerKinds},#{experience},#{introduction})
+    </insert>
+
+    <!-- ログインユーザー取得-->
+    <select id="finndLoginUser" resultType="JointUser">
+        select * from users where user_id = #{userId}
+    </select>
+
+    <!-- ユーザー複数件取得-->
+    <select id="findMany" resultType="JointUser">
+        select * from users
+        <where>
+            <if test="userId !=null">
+                user_id like '%' || #{userId} '%'
+            </if>
+        </where>
+    </select>
+    <!-- ユーザー1件検索-->
+    <select id="findOne" resultMap="user">
+        select * from users where user_id = #{userId} 
+    </select>
+
+    <!-- パスワード更新-->
+    <update id="updateOne">
+        update users set password = #{password} where user_id=#{userId}
+    </update>
+
+    <!-- ユーザー1件削除-->
+    <delete id="deleteOne">
+        delete from users where user_id =#{userId}
+    </delete>
+</mapper>

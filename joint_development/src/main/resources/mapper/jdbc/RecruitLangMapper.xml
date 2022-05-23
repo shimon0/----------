@@ -17,7 +17,7 @@
 
     <!-- エンジニアタイプの募集人数　登録-->
     <insert id="recruitLangCount">
-        insert into recruitLang(user_id,post_date,post_date,team_name,frequency_date)
-        values (#{userId},#{postDate},#{teamName},#{teamName},#{content},#{frequencyWeek},#{frequencyDate})
+        insert into recruitLang(project_id,lang_cl,lang_web,lang_fr,lang_ml,lang_qa)
+        values (#{projectId},#{langCl},#{langWeb},#{langFr},#{langMl},#{langQa})
     </insert>
 </mapper>

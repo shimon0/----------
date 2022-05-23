@@ -1,5 +1,7 @@
 package com.example.joint_development.controller;
 
+import javax.servlet.http.HttpSession;
+
 import com.example.joint_development.domain.Projects;
 import com.example.joint_development.domain.RecruitLang;
 import com.example.joint_development.form.ProojectMakeForm;
@@ -34,6 +36,9 @@ public class MakeProjectController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private HttpSession session;
+
     /**
      * プロジェクト作成
      * @param projectsForm
@@ -46,9 +51,19 @@ public class MakeProjectController {
         if (bindingResult.hasErrors()) {
             return 1;
         }
+
+        
+
         //formを各domain形式に変更
         Projects projects=modelMapper.map(form, Projects.class);
         RecruitLang recruitLang=modelMapper.map(form, RecruitLang.class);
+
+        //ログイン情報取得
+        if (session.getAttribute("user")==null) {
+            return 2;
+        }else{
+            projects.setUserId(modelMapper.map(session.getAttribute("user"),Projects.class).getUserId());
+        }
 
         //DBにプロジェクト登録
         int projectId=projectsService.makeProject(projects);

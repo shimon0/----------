@@ -49,7 +49,7 @@
 
     <!-- プロジェクト概要-->
     <select id="findProjectList" resultType="Projects">
-        select * from projects oreder by project_id desc
+        select * from projects order by project_id desc
     </select>
 
     <!-- プロジェクト詳細1件取得 -->

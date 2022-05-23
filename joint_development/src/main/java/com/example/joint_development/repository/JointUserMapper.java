@@ -12,9 +12,10 @@ public interface JointUserMapper {
     
     /** ユーザー登録 */
     public int insertOne(JointUser user);
-
+    
     /** ログインユーザー取得 */
     public JointUser findLoginUser(String email, String password);
+  
 
     /** ユーザー情報取得 */
     public List<JointUser> findMany(JointUser user);

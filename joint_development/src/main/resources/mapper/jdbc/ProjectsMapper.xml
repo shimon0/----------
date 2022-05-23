@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- Mapper と xml の マッピング -->
-<mapper namespace="com.example.joint_development.repository.ProjectsrMapper">
+<mapper namespace="com.example.joint_development.repository.ProjectsMapper">
 
     <!-- マッピング定義-->
     <resultMap id="project" type="com.example.joint_development.domain.Projects">

@@ -29,7 +29,7 @@
     </insert>
 
     <!-- ログインユーザー取得-->
-    <select id="findLoginUser" resultType="JointUser">
+    <select id="findLoginUser" resultType="UserDetail">
         select user_id,name,email,password,joining_date,engineer_kinds,experience,introduction from users where email = #{email} AND password = #{password}
     </select>
 

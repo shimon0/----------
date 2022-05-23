@@ -1,7 +1,10 @@
 package com.example.joint_development.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.joint_development.domain.JointUser;
 import com.example.joint_development.domain.LangDetail;
+import com.example.joint_development.domain.LoginUser;
 import com.example.joint_development.domain.UserDetail;
 import com.example.joint_development.service.UserDetailService;
 
@@ -23,6 +28,9 @@ public class UserDetailController {
     
     @Autowired
     private UserDetailService userService;
+    
+    @Autowired
+    private HttpSession session;
     
     /** ユーザー詳細情報取得 */
     @PostMapping("/detail")
@@ -74,4 +82,45 @@ public class UserDetailController {
     	//userService.setLangDetail(langDetail);
     	
     }
+    
+    /** ログイン情報取得*/
+    //返り値が0の場合は正常、1の場合はエラーとしている
+    @PostMapping("/login")
+    public int findLoginUser(@RequestBody LoginUser loginUser) {
+		/*
+		 * if(result.hasErrors()) { //入力値エラーの際の処理を書く
+		 * System.out.println("ログインできませんでした。"); return 1; }
+		 */
+    	
+    	
+    	
+    	//loginUser.setEmail(email);
+    	//loginUser.setPassword(password);
+    	
+    	//ログインユーザ情報取得
+    	UserDetail user = userService.getLoginUser(loginUser.getEmail(), loginUser.getPassword());
+    	if(user == null) {
+    		return 1;
+    	}
+    	
+    	System.out.println("ログインできました");
+    	session.setAttribute("user", user);
+    	return 0;
+    }
+    
+    /**ログアウトする*/
+    @GetMapping("/logout")
+    public int logout() {
+    	if(session.getAttribute("user") == null) {
+    		System.out.println("ログインしていません");
+    		return 1;
+    	}else {
+    		System.out.println("ログアウトしました。");
+    		session.invalidate();
+    	}
+    	
+    	return 0;
+    }
+    
+    
 }

@@ -81,8 +81,8 @@ public class JointUserdetailsController {
     
     /** ログイン情報取得*/
     //返り値が0の場合は正常、1の場合はエラーとしている
-    @PostMapping("/login")
-    public int getLoginUser(@RequestBody LoginUser loginUser) {
+//    @PostMapping("/login")
+//    public int findLoginUser(@RequestBody LoginUser loginUser) {
 		/*
 		 * if(result.hasErrors()) { //入力値エラーの際の処理を書く
 		 * System.out.println("ログインできませんでした。"); return 1; }
@@ -94,31 +94,30 @@ public class JointUserdetailsController {
     	//loginUser.setPassword(password);
     	
     	//ログインユーザ情報取得
-    	JointUser user = userService.getLoginUser(loginUser.getEmail(), loginUser.getPassword());
-    	if(user == null) {
-    		System.out.println("ログインできませんでした");
-    		return 1;
-    	}
-    	
-    	System.out.println("ログインできました");
-    	session.setAttribute("user", user);
-    	return 0;
-    }
+//    	JointUser user = userService.getLoginUser(loginUser.getEmail(), loginUser.getPassword());
+//    	if(user == null) {
+//    		System.out.println("ログインできませんでした");
+//    		return 1;
+//    	}
+//    	
+//    	System.out.println("ログインできました");
+//    	session.setAttribute("user", user);
+//    	return 0;
+//    }
     
-    /**ログアウトする*/
-    @GetMapping("/logout")
-    public int logout() {
-    	if(session.getAttribute("user") == null) {
-    		System.out.println("ログインしていません");
-    		return 1;
-    	}else {
-    		System.out.println("ログアウトしました。");
-    		session.invalidate();
-    	}
-    	
-    	return 0;
-    }
-        
+//    /**ログアウトする*/
+//    @GetMapping("/logout")
+//    public int logout() {
+//    	if(session.getAttribute("user") == null) {
+//    		System.out.println("ログインしていません");
+//    		return 1;
+//    	}else {
+//    		System.out.println("ログアウトしました。");
+//    		session.invalidate();
+//    	}
+//    	
+//    	return 0;
+//    }
     
 }
 

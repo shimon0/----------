@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.joint_development.domain.JointUser;
 import com.example.joint_development.domain.LangDetail;
 import com.example.joint_development.domain.UserDetail;
 import com.example.joint_development.repository.UserDetailMapper;
@@ -28,5 +29,11 @@ public class UserDetailService {
     public UserDetail getUserOne(Integer userId){
         return mapper.findOne(userId);
     }
+    
+    /** ログインユーザー取得 */
+    public UserDetail getLoginUser(String email, String password){
+        return mapper.findLoginUser(email, password);
+    }
+
 
 }

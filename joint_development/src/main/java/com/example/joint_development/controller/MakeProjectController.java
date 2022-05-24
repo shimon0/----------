@@ -71,7 +71,7 @@ public class MakeProjectController {
         recruitLangService.recruitLangCount(recruitLang);
 
         //belongsテーブルに登録
-        belongsService.newProjectReader(form.getUserId(), projectId);
+        belongsService.newProjectReader(projects.getUserId(), projectId);
         
         return 0;
     }

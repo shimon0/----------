@@ -16,8 +16,8 @@
         <result column="end_date" property="endDate"/>
         <result column="frequency_month_or_week" property="frequencyMonthOrWeek"/>
         <result column="frequency_day" property="frequencyDay"/>
-        <association property="recruitLang" resultMap="recruitLang"></association>
-        <collection property="projectUserList" resultMap="projectUserList"></collection>
+        <association property="recruitLang" resultMap="recruitLang" columnPrefix="recruit_"></association>
+        <collection property="projectUserList" resultMap="projectUserList" columnPrefix="member_"></collection>
     </resultMap>
 
     <!-- マッピング定義（recruitLang）-->
@@ -34,6 +34,7 @@
     <resultMap id="projectUserList" type="com.example.joint_development.domain.ProjectUser">
         <id column="user_id" property="userId"/>
         <result column="name" property="name"/>
+        <result column="engineer_kinds" property="engineerKinds"/>
     </resultMap>
 
     <!-- プロジェクト 作成 -->
@@ -57,12 +58,14 @@
         select 
         projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,
         projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
-        recruitLang.lang_cl,recruitLang.lang_web,recruitLang.lang_fr,recruitLang.lang_ml,recruitLang.lang_qa,
-        users.user_id,users.name 
+        recruitLang.lang_cl as recruit_lang_cl,recruitLang.lang_web as recruit_lang_web,
+        recruitLang.lang_fr as recruit_lang_fr,recruitLang.lang_ml as recruit_lang_ml,
+        recruitLang.lang_qa as recruit_lang_qa,recruitLang.project_id as recruit_project_id,
+        users.user_id as member_user_id,users.name as member_name,users.engineer_kinds as member_engineer_kinds 
         from projects 
-        join recruitLang on projects.project_id = recruitLang.project_id
-        join belongs on projects.project_id = belongs.project_id
-        join users on belongs.user_id= users.user_id
+        left join recruitLang on projects.project_id = recruitLang.project_id
+        left join belongs on projects.project_id = belongs.project_id
+        left join users on belongs.user_id= users.user_id
         where 
         projects.project_id=#{projectId}
         AND

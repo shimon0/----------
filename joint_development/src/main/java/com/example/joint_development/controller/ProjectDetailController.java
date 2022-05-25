@@ -32,4 +32,5 @@ public class ProjectDetailController {
     public void upsert(@RequestBody Belongs belongs){
         belongsService.updateStatus(belongs);
     }
+    
 }

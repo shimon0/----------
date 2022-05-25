@@ -1,6 +1,9 @@
 package com.example.joint_development.repository;
 
+import java.util.List;
+
 import com.example.joint_development.domain.Belongs;
+import com.example.joint_development.domain.ProjectUser;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,5 +18,8 @@ public interface BelongsMapper {
 
     /** 参加申請orステータス更新 */
     public void updateStatus(Belongs belongs);
+
+    /** 応募者確認　List */
+    public List<ProjectUser> checkApplicant(int projectId);
 
 }

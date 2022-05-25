@@ -31,4 +31,13 @@
         do update set
         status = #{status}
     </insert>
+
+    <!-- 応募者確認　List -->
+    <select id="checkApplicant" resultType="ProjectUser">
+        select users.user_id,users.name,engineer_kinds 
+        from users
+        join belongs on users.user_id=belongs.user_id
+        where belongs.project_id=#{projectId} 
+        and belongs.status='pending'
+    </select>
 </mapper>

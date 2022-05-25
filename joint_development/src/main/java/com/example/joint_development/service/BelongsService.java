@@ -1,6 +1,9 @@
 package com.example.joint_development.service;
 
+import java.util.List;
+
 import com.example.joint_development.domain.Belongs;
+import com.example.joint_development.domain.ProjectUser;
 import com.example.joint_development.repository.BelongsMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +30,9 @@ public class BelongsService {
     /** 参加申請orステータス更新 */
     public void updateStatus(Belongs belongs){
         belongsMapper.updateStatus(belongs);
+    }
+    /** 応募者確認　List */
+    public List<ProjectUser> checkApplicant(int projectId){
+        return belongsMapper.checkApplicant(projectId);
     }
 }

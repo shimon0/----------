@@ -34,6 +34,7 @@
     <resultMap id="projectUserList" type="com.example.joint_development.domain.ProjectUser">
         <id column="user_id" property="userId"/>
         <result column="name" property="name"/>
+        <result column="users.engineer_kinds" property="engineerKinds"/>
     </resultMap>
 
     <!-- プロジェクト 作成 -->
@@ -58,7 +59,7 @@
         projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,
         projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
         recruitLang.lang_cl,recruitLang.lang_web,recruitLang.lang_fr,recruitLang.lang_ml,recruitLang.lang_qa,
-        users.user_id,users.name 
+        users.user_id,users.name,users.engineer_kinds 
         from projects 
         join recruitLang on projects.project_id = recruitLang.project_id
         join belongs on projects.project_id = belongs.project_id

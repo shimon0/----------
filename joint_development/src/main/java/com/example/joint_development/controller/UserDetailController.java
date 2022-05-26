@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.joint_development.domain.JointUser;
-import com.example.joint_development.domain.LangDetail;
 import com.example.joint_development.domain.LoginUser;
-
 import com.example.joint_development.domain.UserDetail;
 import com.example.joint_development.service.UserDetailService;
 
@@ -27,19 +23,23 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin
 public class UserDetailController {
     
-    @Autowired
+	@Autowired
     private UserDetailService userService;
     
     @Autowired
     private HttpSession session;
     
     /** ユーザー詳細情報取得 */
-    @PostMapping("/detail")
-    public UserDetail getUser(@RequestParam("userId") Integer userId){
+    @PostMapping("/mypage")
+    public UserDetail getUser(@RequestBody Integer userId){
 
-        //ユーザー1件取得
-    	return userService.getUserOne(userId);
+    	//ユーザー情報取得
+    	UserDetail user=userService.getUserOne(userId);
     	
+    	//チーム情報取得
+    	user.setTeamList(userService.findTeam(userId));
+    	
+    	return user;
     }
     
     /** ユーザー登録処理 */

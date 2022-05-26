@@ -18,4 +18,5 @@ public class RecruitLangService {
     public void recruitLangCount(RecruitLang recruitLang){
         recruitLangMapper.recruitLangCount(recruitLang);
     }
+
 }

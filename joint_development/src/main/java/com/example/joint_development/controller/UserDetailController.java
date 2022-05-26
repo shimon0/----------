@@ -125,7 +125,8 @@ public class UserDetailController {
     /** ログイン情報取得*/
     //返り値が0の場合は正常、1の場合はエラーとしている
     @PostMapping("/login")
-    public int findLoginUser(@RequestBody LoginUser loginUser) {
+    public UserDetail findLoginUser(@RequestBody LoginUser loginUser) {
+    	//UserDetail userDetail = new UserDetail();
 		/*
 		 * if(result.hasErrors()) { //入力値エラーの際の処理を書く
 		 * System.out.println("ログインできませんでした。"); return 1; }
@@ -139,12 +140,16 @@ public class UserDetailController {
     	//ログインユーザ情報取得
     	UserDetail user = userService.getLoginUser(loginUser.getEmail(), loginUser.getPassword());
     	if(user == null) {
-    		return 1;
+    		System.out.println("ログインできませんでした");
+    		//user.setEmail(null);
+    		//System.out.println(user.getEmail());
+    		return user;
     	}
     	
     	System.out.println("ログインできました");
-    	session.setAttribute("user", user);
-    	return 0;
+    	System.out.println(user.getName());
+    	//session.setAttribute("user", user);
+    	return user;
     }
     
     /**ログアウトする*/

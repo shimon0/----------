@@ -4,7 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +17,7 @@ import com.example.joint_development.service.ProjectsService;
 import com.example.joint_development.service.RecruitLangService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/project")
 public class MakeProjectController {
     
@@ -34,7 +37,7 @@ public class MakeProjectController {
      * @return
      */
     @PostMapping("/insert")
-    public int makeProject(@Validated ProjectMakeForm form,BindingResult bindingResult){
+    public int makeProject(@Validated @RequestBody ProjectMakeForm form,BindingResult bindingResult){
         
         if (bindingResult.hasErrors()) {
             return 1;

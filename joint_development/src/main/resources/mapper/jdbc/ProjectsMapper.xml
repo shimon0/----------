@@ -64,12 +64,11 @@
         users.user_id as member_user_id,users.name as member_name,users.engineer_kinds as member_engineer_kinds 
         from projects 
         left join recruitLang on projects.project_id = recruitLang.project_id
-        left join belongs on projects.project_id = belongs.project_id
+        left join 
+        (select * from belongs where status='belongs') AS belongs on projects.project_id = belongs.project_id
         left join users on belongs.user_id= users.user_id
         where 
         projects.project_id=#{projectId}
-        AND
-        belongs.status ='belongs'
     </select>
 
 </mapper>

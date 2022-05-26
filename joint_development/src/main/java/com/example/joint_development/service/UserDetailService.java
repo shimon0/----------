@@ -1,11 +1,13 @@
 package com.example.joint_development.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.joint_development.domain.JointUser;
 import com.example.joint_development.domain.LangDetail;
+import com.example.joint_development.domain.Team;
 import com.example.joint_development.domain.UserDetail;
 import com.example.joint_development.repository.UserDetailMapper;
 @Transactional
@@ -30,6 +32,10 @@ public class UserDetailService {
         return mapper.findOne(userId);
     }
     
+    /** ユーザー取得（1件） */
+    public List<Team> findTeam(Integer userId){
+        return mapper.findTeam(userId);
+    }
     /** ログインユーザー取得 */
     public UserDetail getLoginUser(String email, String password){
         return mapper.findLoginUser(email, password);

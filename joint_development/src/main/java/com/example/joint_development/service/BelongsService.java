@@ -22,11 +22,6 @@ public class BelongsService {
         belongsMapper.newProjectReader(userId, projectId);
     };
 
-    /** ステータス確認 */
-    public String confirmStatus(int userId,int projectId){
-        return belongsMapper.confirmStatus(userId, projectId);
-    }
-
     /** 参加申請orステータス更新 */
     public void updateStatus(Belongs belongs){
         belongsMapper.updateStatus(belongs);

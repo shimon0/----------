@@ -60,7 +60,7 @@
         projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
         recruitLang.lang_cl as recruit_lang_cl,recruitLang.lang_web as recruit_lang_web,
         recruitLang.lang_fr as recruit_lang_fr,recruitLang.lang_ml as recruit_lang_ml,
-        recruitLang.lang_qa as recruit_lang_qa,
+        recruitLang.lang_qa as recruit_lang_qa,recruitLang.project_id as recruit_project_id,
         users.user_id as member_user_id,users.name as member_name,users.engineer_kinds as member_engineer_kinds 
         from projects 
         left join recruitLang on projects.project_id = recruitLang.project_id

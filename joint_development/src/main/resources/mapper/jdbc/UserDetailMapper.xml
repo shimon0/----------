@@ -16,6 +16,12 @@
         <result column="experience" property="experience"/>
         <result column="introduction" property="introduction"/>
     </resultMap>
+    
+    <resultMap id="team" type="com.example.joint_development.domain.Team">
+        <id column="project_id" property="projectId"/>
+        <result column="team_name" property="teamName"/>
+        <result column="status" property="status"/>
+    </resultMap>
 
     <!-- ユーザー 1 件 登録 -->
     <insert id ="insertOne" useGeneratedKeys="true" keyProperty="userId">
@@ -30,7 +36,7 @@
 
     <!-- ログインユーザー取得-->
     <select id="findLoginUser" resultType="UserDetail">
-        select user_id,name,email,password,joining_date,engineer_kinds,experience,introduction from users where email = #{email} AND password = #{password}
+        select user_id,name from users where email = #{email} AND password = #{password}
     </select>
 
     <!-- ユーザー複数件取得-->
@@ -45,7 +51,21 @@
 
     <!-- ユーザー1件検索-->
     <select id="findOne" resultMap="user">
-        select * from users where user_id = #{userId} 
+        select name,joining_date,experience,engineer_kinds from users where user_id = #{userId} 
     </select>
-
+    
+    <!-- チーム検索-->
+    <select id="findTeam" resultMap="team">
+        SELECT
+        p.project_id,p.team_name,
+        MAX(
+        CASE b.status
+        WHEN 'belongs' THEN 0
+        WHEN 'pending' THEN 1
+        ELSE NULL END
+        )AS status
+        FROM projects p JOIN belongs b USING (project_id)
+        GROUP BY p.project_id,p.team_name
+        HAVING p.user_id = #{userId}
+    </select>
 </mapper>

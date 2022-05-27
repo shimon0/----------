@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.joint_development.domain.JointUser;
-import com.example.joint_development.domain.LangDetail;
 import com.example.joint_development.domain.LoginUser;
-
 import com.example.joint_development.domain.UserDetail;
 import com.example.joint_development.service.UserDetailService;
 
@@ -27,19 +23,23 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin
 public class UserDetailController {
     
-    @Autowired
+	@Autowired
     private UserDetailService userService;
     
     @Autowired
     private HttpSession session;
     
     /** ユーザー詳細情報取得 */
-    @PostMapping("/detail")
-    public UserDetail getUser(@RequestParam("userId") Integer userId){
+    @PostMapping("/mypage")
+    public UserDetail getUser(@RequestBody Integer userId){
 
-        //ユーザー1件取得
-    	return userService.getUserOne(userId);
+    	//ユーザー情報取得
+    	UserDetail user=userService.getUserOne(userId);
     	
+    	//チーム情報取得
+    	user.setTeamList(userService.findTeam(userId));
+    	
+    	return user;
     }
     
     /** ユーザー登録処理 */
@@ -125,7 +125,8 @@ public class UserDetailController {
     /** ログイン情報取得*/
     //返り値が0の場合は正常、1の場合はエラーとしている
     @PostMapping("/login")
-    public int findLoginUser(@RequestBody LoginUser loginUser) {
+    public UserDetail findLoginUser(@RequestBody LoginUser loginUser) {
+    	//UserDetail userDetail = new UserDetail();
 		/*
 		 * if(result.hasErrors()) { //入力値エラーの際の処理を書く
 		 * System.out.println("ログインできませんでした。"); return 1; }
@@ -139,12 +140,16 @@ public class UserDetailController {
     	//ログインユーザ情報取得
     	UserDetail user = userService.getLoginUser(loginUser.getEmail(), loginUser.getPassword());
     	if(user == null) {
-    		return 1;
+    		System.out.println("ログインできませんでした");
+    		//user.setEmail(null);
+    		//System.out.println(user.getEmail());
+    		return user;
     	}
     	
     	System.out.println("ログインできました");
-    	session.setAttribute("user", user);
-    	return 0;
+    	System.out.println(user.getName());
+    	//session.setAttribute("user", user);
+    	return user;
     }
     
     /**ログアウトする*/

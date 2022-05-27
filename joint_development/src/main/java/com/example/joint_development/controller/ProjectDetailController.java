@@ -20,12 +20,6 @@ public class ProjectDetailController {
     @Autowired
     private BelongsService belongsService;
 
-    /** ステータス確認 */
-    @GetMapping("/getStatus")
-    public String confirmStatus(int userId,int projectId){
-        return belongsService.confirmStatus(userId, projectId);
-    }
-
     /** upsert処理
      *  参加申請orステータス更新 */
     @PostMapping("/upsert")

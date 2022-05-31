@@ -21,6 +21,7 @@ public interface UserDetailMapper {
     
     /** ユーザー取得（1件） */
     public List<Team> findTeam(Integer userId);
+    public List<Team> findTeam2(Integer userId);
     
     /** ログインユーザー取得 */
     public UserDetail findLoginUser(String email, String password);

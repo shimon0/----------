@@ -35,6 +35,10 @@ public class UserDetailService {
     public List<Team> findTeam(Integer userId){
         return mapper.findTeam(userId);
     }
+    
+    public List<Team> findTeam2(Integer userId){
+        return mapper.findTeam2(userId);
+    }
     /** ログインユーザー取得 */
     public UserDetail getLoginUser(String email, String password){
         return mapper.findLoginUser(email, password);

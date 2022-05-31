@@ -43,7 +43,11 @@ public class UserDetailController {
     	if(team.size()!=0) {
     		user.setTeamList(team);
     	}
-
+    	
+    	List<Team>team2=userService.findTeam2(users.getUserId());
+    	if(team2.size()!=0) {
+    		user.setTeam2List(team2);
+    	}
     	return user;
     }
     

@@ -16,5 +16,6 @@ public class UserDetail {
     private String introduction;
     private List<String>otherAvailableLang;
     private List<Team>teamList;
+    private List<Team>team2List;
 
 }

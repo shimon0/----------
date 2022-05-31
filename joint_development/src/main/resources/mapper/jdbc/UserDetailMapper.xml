@@ -69,4 +69,11 @@
         GROUP BY p.project_id,p.team_name
         HAVING p.user_id = #{userId}
     </select>
+    
+    <!-- チーム検索-->
+    <select id="findTeam2" resultMap="team">
+        select p.project_id,p.team_name 
+		from belongs b JOIN projects p USING(project_id) 
+		where b.user_id=#{userId} AND b.status='belongs'
+    </select>
 </mapper>

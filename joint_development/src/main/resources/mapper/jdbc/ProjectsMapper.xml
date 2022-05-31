@@ -12,6 +12,7 @@
         <result column="post_date" property="postDate"/>
         <result column="team_name" property="teamName"/>
         <result column="content" property="content"/>
+        <result column="content_detail" property="contentDetail"/>
         <result column="start_date" property="startDate"/>
         <result column="end_date" property="endDate"/>
         <result column="frequency_month_or_week" property="frequencyMonthOrWeek"/>
@@ -39,8 +40,8 @@
 
     <!-- プロジェクト 作成 -->
     <insert id ="makeProject" useGeneratedKeys="true" keyColumn="project_id" keyProperty="projectId">
-        insert into projects(user_id,post_date,team_name,content,start_date,end_date,frequency_month_or_week,frequency_day)
-        values (#{userId},CURRENT_DATE,#{teamName},#{content},#{startDate},#{endDate},#{frequencyMonthOrWeek},#{frequencyDay})
+        insert into projects(user_id,post_date,team_name,content,content_detail,start_date,end_date,frequency_month_or_week,frequency_day)
+        values (#{userId},CURRENT_DATE,#{teamName},#{content},#{contentDetail},#{startDate},#{endDate},#{frequencyMonthOrWeek},#{frequencyDay})
     </insert>
 
     <!-- 最新プロジェクトID検索-->
@@ -49,8 +50,16 @@
     </select>
 
     <!-- プロジェクト概要-->
-    <select id="findProjectList" resultType="Projects">
-        select * from projects order by project_id desc
+    <select id="findProjectList" resultMap="project">
+        select 
+        projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,projects.content_detail,
+        projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
+        recruitLang.lang_cl as recruit_lang_cl,recruitLang.lang_web as recruit_lang_web,
+        recruitLang.lang_fr as recruit_lang_fr,recruitLang.lang_ml as recruit_lang_ml,
+        recruitLang.lang_qa as recruit_lang_qa
+        from projects
+        left join recruitLang on projects.project_id = recruitLang.project_id
+        order by project_id desc
     </select>
 
     <!-- プロジェクト詳細1件取得 -->
@@ -60,7 +69,7 @@
         projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
         recruitLang.lang_cl as recruit_lang_cl,recruitLang.lang_web as recruit_lang_web,
         recruitLang.lang_fr as recruit_lang_fr,recruitLang.lang_ml as recruit_lang_ml,
-        recruitLang.lang_qa as recruit_lang_qa,recruitLang.project_id as recruit_project_id,
+        recruitLang.lang_qa as recruit_lang_qa,
         users.user_id as member_user_id,users.name as member_name,users.engineer_kinds as member_engineer_kinds 
         from projects 
         left join recruitLang on projects.project_id = recruitLang.project_id

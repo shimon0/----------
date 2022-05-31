@@ -13,6 +13,7 @@ public class Projects {
     private Date postDate;
     private String teamName;
     private String content;
+    private String contentDetail;
     private Date startDate;
     private Date endDate;
     private String frequencyMonthOrWeek;

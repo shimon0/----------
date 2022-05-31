@@ -39,26 +39,21 @@
     </resultMap>
 
     <!-- プロジェクト 作成 -->
-    <insert id ="makeProject" useGeneratedKeys="true" keyColumn="project_id" keyProperty="projectId">
+    <insert id ="makeProject" useGeneratedKeys="true" keyProperty="projectId">
         insert into projects(user_id,post_date,team_name,content,content_detail,start_date,end_date,frequency_month_or_week,frequency_day)
         values (#{userId},CURRENT_DATE,#{teamName},#{content},#{contentDetail},#{startDate},#{endDate},#{frequencyMonthOrWeek},#{frequencyDay})
     </insert>
 
-    <!-- 最新プロジェクトID検索-->
-    <select id="searchPId" resultType="int">
-        select max(project_id) from projects
-    </select>
-
     <!-- プロジェクト概要-->
     <select id="findProjectList" resultMap="project">
         select 
-        projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,projects.content_detail,
-        projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
-        recruitLang.lang_cl as recruit_lang_cl,recruitLang.lang_web as recruit_lang_web,
-        recruitLang.lang_fr as recruit_lang_fr,recruitLang.lang_ml as recruit_lang_ml,
-        recruitLang.lang_qa as recruit_lang_qa
-        from projects
-        left join recruitLang on projects.project_id = recruitLang.project_id
+        pr.project_id,pr.user_id,pr.post_date,pr.team_name,pr.content,pr.content_detail,
+        pr.start_date,pr.end_date,pr.frequency_month_or_week,pr.frequency_day,
+        rl.lang_cl as recruit_lang_cl,rl.lang_web as recruit_lang_web,
+        rl.lang_fr as recruit_lang_fr,rl.lang_ml as recruit_lang_ml,
+        rl.lang_qa as recruit_lang_qa
+        from projects pr
+        left join recruitLang rl USING(project_id)
         order by project_id desc
     </select>
 
@@ -72,9 +67,9 @@
         recruitLang.lang_qa as recruit_lang_qa,
         users.user_id as member_user_id,users.name as member_name,users.engineer_kinds as member_engineer_kinds 
         from projects 
-        left join recruitLang on projects.project_id = recruitLang.project_id
+        left join recruitLang USING(project_id)
         left join 
-        (select * from belongs where status='belongs') AS belongs on projects.project_id = belongs.project_id
+        (select * from belongs where status='belongs') AS belongs USING(project_id)
         left join users on belongs.user_id= users.user_id
         where 
         projects.project_id=#{projectId}

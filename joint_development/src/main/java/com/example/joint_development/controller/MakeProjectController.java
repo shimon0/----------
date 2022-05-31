@@ -20,7 +20,7 @@ import com.example.joint_development.service.RecruitLangService;
 @CrossOrigin
 @RequestMapping("/project")
 public class MakeProjectController {
-    
+
     @Autowired
     private ProjectsService projectsService;
 
@@ -32,23 +32,25 @@ public class MakeProjectController {
 
     /**
      * プロジェクト作成
+     * 
      * @param projectsForm
      * @param recruitLangForm
      * @return
      */
     @PostMapping("/insert")
-    public int makeProject(@Validated @RequestBody ProjectMakeForm form,BindingResult bindingResult){
-        
+    public int makeProject(@Validated @RequestBody ProjectMakeForm form, BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) {
             return 1;
         }
-        //formを各domainに変更
-        Projects projects=modelMapper.map(form, Projects.class);
-        RecruitLang recruitLang=modelMapper.map(form, RecruitLang.class);
+        // formを各domainに変更
+        Projects projects = modelMapper.map(form, Projects.class);
+        RecruitLang recruitLang = modelMapper.map(form, RecruitLang.class);
 
-        recruitLang.setProjectId(projectsService.makeProject(projects)); ;
+        projectsService.makeProject(projects);
+        recruitLang.setProjectId(projects.getProjectId());
         recruitLangService.recruitLangCount(recruitLang);
-        
+
         return 0;
     }
 }

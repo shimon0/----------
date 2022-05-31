@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.example.joint_development.domain.LangDetail;
 import com.example.joint_development.domain.Team;
 import com.example.joint_development.domain.UserDetail;
 
@@ -16,8 +15,7 @@ public interface UserDetailMapper {
     public int insertOne(UserDetail user);
     
     /** ユーザー登録 */
-    public int insertLang(LangDetail langDetail);
-
+    public void insertLang(Integer userId,String lang);
     /** ユーザー取得（1件） */
     public UserDetail findOne(@Param("userId")Integer userId);
     

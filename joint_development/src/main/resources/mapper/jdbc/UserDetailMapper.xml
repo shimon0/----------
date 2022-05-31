@@ -30,9 +30,10 @@
     </insert>
     
     <insert id ="insertLang">
-        insert into otherAvailableLang(user_id,lang_other1,lang_other2,lang_other3,lang_other4,lang_other5,lang_other6,lang_other7,lang_other8,lang_other9,lang_other10,lang_other11,lang_other12,lang_other13,lang_other14,lang_other15,lang_other16,lang_other17,lang_other18,lang_other19,lang_other20)
-        values (#{userId},#{langOther1},#{langOther2},#{langOther3},#{langOther4},#{langOther5},#{langOther6},#{langOther7},#{langOther8},#{langOther9},#{langOther10},#{langOther11},#{langOther12},#{langOther13},#{langOther14},#{langOther15},#{langOther16},#{langOther17},#{langOther18},#{langOther19},#{langOther20})
+    	insert into otheravailablelang2(user_id,lang)
+    	values(#{userId},#{lang})
     </insert>
+
 
     <!-- ログインユーザー取得-->
     <select id="findLoginUser" resultType="UserDetail">

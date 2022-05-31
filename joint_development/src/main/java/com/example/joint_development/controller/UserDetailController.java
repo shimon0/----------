@@ -43,7 +43,7 @@ public class UserDetailController {
     	if(team.size()!=0) {
     		user.setTeamList(team);
     	}
-    	
+
     	return user;
     }
     
@@ -54,14 +54,14 @@ public class UserDetailController {
 
 		UserDetail user1 = user;
 		// ユーザー登録
-		System.out.println(userService.setUser(user1));
-		user1.setUserId(userService.setUser(user1));
+		userService.setUser(user1);
 		// 言語登録
 		if(user1.getOtherAvailableLang()!= null) {
 			for(String lang : user1.getOtherAvailableLang()) {
 				userService.insertLang(user1.getUserId(),lang);
 			}
 		}
+
 	}
     
     /** ログイン情報取得*/

@@ -38,6 +38,7 @@ public class UserDetailController {
     	
     	//ユーザー情報取得
     	UserDetail user=userService.getUserOne(users.getUserId());
+    	user.setOtherAvailableLang(userService.findLang(users.getUserId()));
     	//チーム情報取得
     	List<Team>team=userService.findTeam(users.getUserId());
     	if(team.size()!=0) {

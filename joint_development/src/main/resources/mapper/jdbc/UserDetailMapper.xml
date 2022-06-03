@@ -22,6 +22,7 @@
         <result column="team_name" property="teamName"/>
         <result column="status" property="status"/>
     </resultMap>
+    
 
     <!-- ユーザー 1 件 登録 -->
     <insert id ="insertOne" useGeneratedKeys="true" keyProperty="userId">
@@ -30,7 +31,7 @@
     </insert>
     
     <insert id ="insertLang">
-    	insert into otheravailablelang2(user_id,lang)
+    	insert into otheravailablelang(user_id,lang)
     	values(#{userId},#{lang})
     </insert>
 
@@ -52,7 +53,11 @@
 
     <!-- ユーザー1件検索-->
     <select id="findOne" resultMap="user">
-        select name,joining_date,experience,engineer_kinds from users where user_id = #{userId} 
+        select name,joining_date,experience,engineer_kinds,introduction from users where user_id = #{userId} 
+    </select>
+    
+    <select id="findLang" resultType="string">
+    	select lang from otheravailablelang where user_id = #{userId}
     </select>
     
     <!-- チーム検索-->

@@ -31,6 +31,10 @@ public class UserDetailService {
         return mapper.findOne(userId);
     }
     
+    public List<String> findLang(Integer userId){
+        return mapper.findLang(userId);
+    }
+    
     /** ユーザー取得（1件） */
     public List<Team> findTeam(Integer userId){
         return mapper.findTeam(userId);

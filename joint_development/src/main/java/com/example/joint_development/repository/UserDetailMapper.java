@@ -18,7 +18,7 @@ public interface UserDetailMapper {
     public void insertLang(Integer userId,String lang);
     /** ユーザー取得（1件） */
     public UserDetail findOne(@Param("userId")Integer userId);
-    
+    public List<String> findLang(@Param("userId")Integer userId);
     /** ユーザー取得（1件） */
     public List<Team> findTeam(Integer userId);
     public List<Team> findTeam2(Integer userId);

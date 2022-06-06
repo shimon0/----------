@@ -39,7 +39,6 @@ public class MakeProjectController {
      */
     @PostMapping("/insert")
     public int makeProject(@Validated @RequestBody ProjectMakeForm form, BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
             return 1;
         }

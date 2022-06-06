@@ -1,36 +1,34 @@
 package com.example.joint_development.form;
 
-import java.util.Date;
-
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 @Data
 public class ProjectMakeForm {
     
-    @NotNull
-    private Integer userId;
-    @NotNull
+    @NotBlank
+    private String userId;
+    @NotBlank
     private String teamName;
-    @NotNull
+    @NotBlank
     private String content;
-    @NotNull
-    private Date startDate;
-    @NotNull
-    private Date endDate;
-    @NotNull
+    @NotBlank
+    private String startDate;
+    @NotBlank
+    private String endDate;
+    @NotBlank
     private String frequencyMonthOrWeek;
-    @NotNull
-    private Integer frequencyDay;
-    @NotNull
-    private Integer langCl;
-    @NotNull
-    private Integer langWeb;
-    @NotNull
-    private Integer langFr;
-    @NotNull
-    private Integer langMl;
-    @NotNull
-    private Integer langQa;
+    @NotBlank
+    private String frequencyDay;
+    @NotBlank
+    private String langCl;
+    @NotBlank
+    private String langWeb;
+    @NotBlank
+    private String langFr;
+    @NotBlank
+    private String langMl;
+    @NotBlank
+    private String langQa;
     
 }

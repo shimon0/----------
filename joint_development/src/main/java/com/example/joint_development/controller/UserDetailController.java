@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.joint_development.domain.LoginUser;
 import com.example.joint_development.domain.Team;
 import com.example.joint_development.domain.UserDetail;
+import com.example.joint_development.form.UserDetailForm;
 import com.example.joint_development.service.UserDetailService;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/user")
-@Slf4j
 @CrossOrigin
 public class UserDetailController {
     
@@ -32,10 +33,12 @@ public class UserDetailController {
     @Autowired
     private HttpSession session;
     
+    @Autowired
+    private ModelMapper modelMapper;
+    
     /** ユーザー詳細情報取得 */
     @PostMapping("/mypage")
     public UserDetail getUser(@RequestBody UserDetail users){
-    	
     	//ユーザー情報取得
     	UserDetail user=userService.getUserOne(users.getUserId());
     	user.setOtherAvailableLang(userService.findLang(users.getUserId()));
@@ -55,17 +58,23 @@ public class UserDetailController {
     /** ユーザー登録処理 */
 	@PostMapping("/register")
 	@ResponseBody
-	public void setUser(@RequestBody UserDetail user) {
-
-		UserDetail user1 = user;
+	public int setUser(@Validated @RequestBody UserDetailForm form, BindingResult bindingResult) {
+		System.out.println(form);
+    	if (bindingResult.hasErrors()) {
+    		//エラーなら空のユーザーを返す
+    		return 1;
+        }
+    	UserDetail user = modelMapper.map(form, UserDetail.class);
 		// ユーザー登録
-		userService.setUser(user1);
+		userService.setUser(user);
 		// 言語登録
-		if(user1.getOtherAvailableLang()!= null) {
-			for(String lang : user1.getOtherAvailableLang()) {
-				userService.insertLang(user1.getUserId(),lang);
+		if(user.getOtherAvailableLang()!= null) {
+			for(String lang : user.getOtherAvailableLang()) {
+				userService.insertLang(user.getUserId(),lang);
 			}
 		}
+		
+		return 0;
 
 	}
     

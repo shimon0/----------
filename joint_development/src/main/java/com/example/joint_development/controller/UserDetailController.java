@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,18 +33,18 @@ public class UserDetailController {
     private ModelMapper modelMapper;
     
     /** ユーザー詳細情報取得 */
-    @PostMapping("/mypage")
-    public UserDetail getUser(@RequestBody UserDetail users){
+    @GetMapping("/mypage")
+    public UserDetail getUser(int userId){
     	//ユーザー情報取得
-    	UserDetail user=userService.getUserOne(users.getUserId());
-    	user.setOtherAvailableLang(userService.findLang(users.getUserId()));
+    	UserDetail user=userService.getUserOne(userId);
+    	user.setOtherAvailableLang(userService.findLang(userId));
     	//チーム情報取得
-    	List<Team>team=userService.findTeam(users.getUserId());
+    	List<Team>team=userService.findTeam(userId);
     	if(team.size()!=0) {
     		user.setTeamList(team);
     	}
     	
-    	List<Team>team2=userService.findTeam2(users.getUserId());
+    	List<Team>team2=userService.findTeam2(userId);
     	if(team2.size()!=0) {
     		user.setTeam2List(team2);
     	}

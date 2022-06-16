@@ -2,14 +2,12 @@ package com.example.joint_development.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +27,6 @@ public class UserDetailController {
     
 	@Autowired
     private UserDetailService userService;
-    
-    @Autowired
-    private HttpSession session;
     
     @Autowired
     private ModelMapper modelMapper;
@@ -106,21 +101,5 @@ public class UserDetailController {
     	System.out.println(user.getName());
     	//session.setAttribute("user", user);
     	return user;
-    }
-    
-    /**ログアウトする*/
-    @GetMapping("/logout")
-    public int logout() {
-    	if(session.getAttribute("user") == null) {
-    		System.out.println("ログインしていません");
-    		return 1;
-    	}else {
-    		System.out.println("ログアウトしました。");
-    		session.invalidate();
-    	}
-    	
-    	return 0;
-    }
-    
-    
+    }   
 }

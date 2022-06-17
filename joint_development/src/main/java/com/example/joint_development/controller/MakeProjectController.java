@@ -63,12 +63,6 @@ public class MakeProjectController {
 		Projects projects = modelMapper.map(form, Projects.class);
 		RecruitLang recruitLang = modelMapper.map(form, RecruitLang.class);
 
-		try {
-			projectsService.updateProject(projects,recruitLang);
-		} catch (Exception e) {
-			return 2;
-		}
-
-		return 0;
+		return	projectsService.updateProject(projects,recruitLang);
 	}
 }

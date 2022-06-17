@@ -37,9 +37,14 @@ public class ProjectsService {
     }
     
     /** プロジェクト1件アップデート*/
-    public void updateProject(Projects projects,RecruitLang recruitLang) {
-    	projectsMapper.updateProject(projects);
-    	changeRecruitMember(projects.getProjectId(), recruitLang);	
+    public int updateProject(Projects projects,RecruitLang recruitLang) {
+    	try {
+        projectsMapper.updateProject(projects);
+    	changeRecruitMember(projects.getProjectId(), recruitLang);
+        return 0;  
+        } catch (Exception e) {
+        return 2;
+        }
     }
     
     /** 募集人数変更*/

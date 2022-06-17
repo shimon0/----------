@@ -21,35 +21,53 @@ import com.example.joint_development.service.RecruitLangService;
 @RequestMapping("/project")
 public class MakeProjectController {
 
-    @Autowired
-    private ProjectsService projectsService;
+	@Autowired
+	private ProjectsService projectsService;
 
-    @Autowired
-    private RecruitLangService recruitLangService;
+	@Autowired
+	private RecruitLangService recruitLangService;
 
-    @Autowired
-    private ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
-    /**
-     * プロジェクト作成
-     * 
-     * @param projectsForm
-     * @param recruitLangForm
-     * @return
-     */
-    @PostMapping("/insert")
-    public int makeProject(@Validated @RequestBody ProjectMakeForm form, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return 1;
-        }
-        // formを各domainに変更
-        Projects projects = modelMapper.map(form, Projects.class);
-        RecruitLang recruitLang = modelMapper.map(form, RecruitLang.class);
+	/**
+	 * プロジェクト作成
+	 * 
+	 * @param projectsForm
+	 * @param recruitLangForm
+	 * @return
+	 */
+	@PostMapping("/insert")
+	public int makeProject(@Validated @RequestBody ProjectMakeForm form, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return 1;
+		}
+		// formを各domainに変更
+		Projects projects = modelMapper.map(form, Projects.class);
+		RecruitLang recruitLang = modelMapper.map(form, RecruitLang.class);
 
-        projectsService.makeProject(projects);
-        recruitLang.setProjectId(projects.getProjectId());
-        recruitLangService.recruitLangCount(recruitLang);
+		projectsService.makeProject(projects);
+		recruitLang.setProjectId(projects.getProjectId());
+		recruitLangService.recruitLangCount(recruitLang);
 
-        return 0;
-    }
+		return 0;
+	}
+
+	@PostMapping("/pjEdit")
+	public int updateProject(@Validated @RequestBody ProjectMakeForm form, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return 1;
+		}
+		// formを各domainに変更
+		Projects projects = modelMapper.map(form, Projects.class);
+		RecruitLang recruitLang = modelMapper.map(form, RecruitLang.class);
+
+		try {
+			projectsService.updateProject(projects,recruitLang);
+		} catch (Exception e) {
+			return 2;
+		}
+
+		return 0;
+	}
 }

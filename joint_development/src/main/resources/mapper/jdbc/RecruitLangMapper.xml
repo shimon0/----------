@@ -20,4 +20,10 @@
         insert into recruitLang(project_id,lang_cl,lang_web,lang_fr,lang_ml,lang_qa)
         values (#{projectId},#{langCl},#{langWeb},#{langFr},#{langMl},#{langQa})
     </insert>
+    
+    <!-- エンジニア募集人数の変更-->
+    <update id="changeRecruitMember">
+    	update recruitLang set lang_cl=#{langCl},lang_web=#{langWeb},lang_fr=#{langFr},lang_ml=#{langMl},lang_qa=#{langQa}
+        where project_id=#{projectId}
+    </update>
 </mapper>

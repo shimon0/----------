@@ -9,4 +9,7 @@ public interface RecruitLangMapper {
     
     /** エンジニア募集人数　登録 */
     public void recruitLangCount(RecruitLang recruitLang);
+    
+    /** エンジニア募集人数変更*/
+    public void changeRecruitMember(RecruitLang recruitLang);
 }

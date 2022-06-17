@@ -13,6 +13,8 @@ public class ProjectMakeForm {
     @NotBlank
     private String content;
     @NotBlank
+    private String contentDetail;
+    @NotBlank
     private String startDate;
     @NotBlank
     private String endDate;

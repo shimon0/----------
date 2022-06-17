@@ -17,5 +17,8 @@ public interface ProjectsMapper {
 
     /** プロジェクト詳細1件取得 */
     public Projects findDetailProject(int projectId);
+    
+    /** プロジェクト1件アップデート*/
+    public int updateProject(Projects projects);
 
 }

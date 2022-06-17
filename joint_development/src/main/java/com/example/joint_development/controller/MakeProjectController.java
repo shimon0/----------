@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +54,7 @@ public class MakeProjectController {
 		return 0;
 	}
 
-	@PostMapping("/pjEdit")
+	@PatchMapping("/pjEdit")
 	public int updateProject(@Validated @RequestBody ProjectMakeForm form, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return 1;

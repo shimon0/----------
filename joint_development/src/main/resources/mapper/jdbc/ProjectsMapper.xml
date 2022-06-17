@@ -1,0 +1,86 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper と xml の マッピング -->
+<mapper namespace="com.example.joint_development.repository.ProjectsMapper">
+
+    <!-- マッピング定義-->
+    <resultMap id="project" type="com.example.joint_development.domain.Projects">
+        <id column="project_id" property="projectId"/>
+        <result column="user_id" property="userId"/>
+        <result column="post_date" property="postDate"/>
+        <result column="team_name" property="teamName"/>
+        <result column="content" property="content"/>
+        <result column="content_detail" property="contentDetail"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="frequency_month_or_week" property="frequencyMonthOrWeek"/>
+        <result column="frequency_day" property="frequencyDay"/>
+        <association property="recruitLang" resultMap="recruitLang" columnPrefix="recruit_"></association>
+        <collection property="projectUserList" resultMap="projectUserList" columnPrefix="member_"></collection>
+    </resultMap>
+
+    <!-- マッピング定義（recruitLang）-->
+    <resultMap id="recruitLang" type="com.example.joint_development.domain.RecruitLang">
+        <id column="project_id" property="projectId"/>
+        <result column="lang_cl" property="langCl"/>
+        <result column="lang_web" property="langWeb"/>
+        <result column="lang_fr" property="langFr"/>
+        <result column="lang_ml" property="langMl"/>
+        <result column="lang_qa" property="langQa"/>
+    </resultMap>
+
+    <!-- マッピング定義（projectUserList）-->
+    <resultMap id="projectUserList" type="com.example.joint_development.domain.ProjectUser">
+        <id column="user_id" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="engineer_kinds" property="engineerKinds"/>
+    </resultMap>
+
+    <!-- プロジェクト 作成 -->
+    <insert id ="makeProject" useGeneratedKeys="true" keyProperty="projectId">
+        insert into projects(user_id,post_date,team_name,content,content_detail,start_date,end_date,frequency_month_or_week,frequency_day)
+        values (#{userId},CURRENT_DATE,#{teamName},#{content},#{contentDetail},#{startDate},#{endDate},#{frequencyMonthOrWeek},#{frequencyDay})
+    </insert>
+    
+    <!-- プロジェクト 1件アップデート -->
+    <update id ="updateProject" useGeneratedKeys="true" keyProperty="projectId">
+        update projects set team_name = #{teamName},content=#{content},
+        content_detail=#{contentDetail},start_date=#{startDate},end_date=#{endDate},
+        frequency_month_or_week=#{frequencyMonthOrWeek},frequency_day=#{frequencyDay}
+        where project_id=#{projectId}
+    </update>
+
+    <!-- プロジェクト概要-->
+    <select id="findProjectList" resultMap="project">
+        select 
+        pr.project_id,pr.user_id,pr.post_date,pr.team_name,pr.content,pr.content_detail,
+        pr.start_date,pr.end_date,pr.frequency_month_or_week,pr.frequency_day,
+        rl.lang_cl as recruit_lang_cl,rl.lang_web as recruit_lang_web,
+        rl.lang_fr as recruit_lang_fr,rl.lang_ml as recruit_lang_ml,
+        rl.lang_qa as recruit_lang_qa
+        from projects pr
+        left join recruitLang rl USING(project_id)
+        order by project_id desc
+    </select>
+
+    <!-- プロジェクト詳細1件取得 -->
+    <select id="findDetailProject" resultMap="project">
+        select 
+        projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,projects.content_detail,
+        projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
+        recruitLang.lang_cl as recruit_lang_cl,recruitLang.lang_web as recruit_lang_web,
+        recruitLang.lang_fr as recruit_lang_fr,recruitLang.lang_ml as recruit_lang_ml,
+        recruitLang.lang_qa as recruit_lang_qa,
+        users.user_id as member_user_id,users.name as member_name,users.engineer_kinds as member_engineer_kinds 
+        from projects 
+        left join recruitLang USING(project_id)
+        left join 
+        (select * from belongs where status='belongs') AS belongs USING(project_id)
+        left join users on belongs.user_id= users.user_id
+        where 
+        projects.project_id=#{projectId}
+    </select>
+
+</mapper>

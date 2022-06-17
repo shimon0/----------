@@ -1,0 +1,84 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper と xml の マッピング -->
+<mapper namespace="com.example.joint_development.repository.UserDetailMapper">
+
+    <!-- マッピング定義-->
+    <resultMap id="user" type="com.example.joint_development.domain.UserDetail">
+        <id column="user_id" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="joining_date" property="joiningDate"/>
+        <result column="engineer_kinds" property="engineerKinds"/>
+        <result column="experience" property="experience"/>
+        <result column="introduction" property="introduction"/>
+    </resultMap>
+    
+    <resultMap id="team" type="com.example.joint_development.domain.Team">
+        <id column="project_id" property="projectId"/>
+        <result column="team_name" property="teamName"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    
+
+    <!-- ユーザー 1 件 登録 -->
+    <insert id ="insertOne" useGeneratedKeys="true" keyProperty="userId">
+        insert into users(name,email,password,joining_date,engineer_kinds,experience,introduction)
+        values (#{name},#{email},#{password},#{joiningDate},#{engineerKinds},#{experience},#{introduction})
+    </insert>
+    
+    <insert id ="insertLang">
+    	insert into otheravailablelang(user_id,lang)
+    	values(#{userId},#{lang})
+    </insert>
+
+
+    <!-- ログインユーザー取得-->
+    <select id="findLoginUser" resultType="UserDetail">
+        select user_id,name from users where email = #{email} AND password = #{password}
+    </select>
+
+    <!-- ユーザー複数件取得-->
+    <select id="findMany" resultType="JointUser">
+        select * from users
+        <where>
+            <if test="userId !=null">
+                user_id like '%' || #{userId} '%'
+            </if>
+        </where>
+    </select>
+
+    <!-- ユーザー1件検索-->
+    <select id="findOne" resultMap="user">
+        select name,joining_date,experience,engineer_kinds,introduction from users where user_id = #{userId} 
+    </select>
+    
+    <select id="findLang" resultType="string">
+    	select lang from otheravailablelang where user_id = #{userId}
+    </select>
+    
+    <!-- チーム検索-->
+    <select id="findTeam" resultMap="team">
+        SELECT
+        p.project_id,p.team_name,
+        MAX(
+        CASE b.status
+        WHEN 'belongs' THEN 0
+        WHEN 'pending' THEN 1
+        ELSE NULL END
+        )AS status
+        FROM projects p JOIN belongs b USING (project_id)
+        GROUP BY p.project_id,p.team_name
+        HAVING p.user_id = #{userId}
+    </select>
+    
+    <!-- チーム検索-->
+    <select id="findTeam2" resultMap="team">
+        select p.project_id,p.team_name 
+		from belongs b JOIN projects p USING(project_id) 
+		where b.user_id=#{userId} AND b.status='belongs'
+    </select>
+</mapper>

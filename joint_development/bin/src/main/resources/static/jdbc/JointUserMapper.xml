@@ -3,10 +3,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- Mapper と xml の マッピング -->
-<mapper namespace="com.example.joint_development.repository.JointUserMapper">
+<mapper namespace="com.example.jointDevelopment.repository.UserMapper">
 
     <!-- マッピング定義-->
-    <resultMap id="user" type="com.example.joint_development.domain.JointUser">
+    <resultMap id="user" type="com.example.jointDevelopment.domain.user.model.JointUser">
         <id column="user_id" property="userId"/>
         <result column="user_name" property="userName"/>
         <result column="email" property="email"/>

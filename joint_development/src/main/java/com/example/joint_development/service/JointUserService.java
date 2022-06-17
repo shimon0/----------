@@ -2,12 +2,12 @@ package com.example.joint_development.service;
 
 import java.util.List;
 
-import com.example.joint_development.domain.JointUser;
-import com.example.joint_development.repository.JointUserMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.example.joint_development.domain.JointUser;
+import com.example.joint_development.repository.JointUserMapper;
 @Transactional
 @Service
 public class JointUserService {
@@ -19,11 +19,13 @@ public class JointUserService {
     public void signup(JointUser user){
         mapper.insertOne(user);
     }
-
+     
     /** ログインユーザー取得 */
-    public JointUser getLoginUser(String userId){
-        return mapper.finndLoginUser(userId);
+    public JointUser getLoginUser(String email, String password){
+        return mapper.findLoginUser(email, password);
     }
+
+   
 
     /** ユーザー取得 */
     public List<JointUser> getUsers(JointUser user){
@@ -31,8 +33,8 @@ public class JointUserService {
     }
 
     /** ユーザー取得（1件） */
-    public JointUser getUserOne(String userId){
-        return mapper.finfOne(userId);
+    public JointUser getUserOne(Integer userId){
+        return mapper.findOne(userId);
     }
 
     /** パスワード更新（1件） */

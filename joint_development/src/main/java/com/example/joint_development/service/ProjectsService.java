@@ -3,7 +3,9 @@ package com.example.joint_development.service;
 import java.util.List;
 
 import com.example.joint_development.domain.Projects;
+import com.example.joint_development.domain.RecruitLang;
 import com.example.joint_development.repository.ProjectsMapper;
+import com.example.joint_development.repository.RecruitLangMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class ProjectsService {
     
     @Autowired
     private ProjectsMapper projectsMapper;
+    
+    @Autowired
+    private RecruitLangMapper recruitLangMapper;
 
     /** プロジェクト作成 */
     public int makeProject(Projects projects){
@@ -30,4 +35,17 @@ public class ProjectsService {
     public Projects findDetailProject(int projectId){
         return projectsMapper.findDetailProject(projectId);
     }
+    
+    /** プロジェクト1件アップデート*/
+    public void updateProject(Projects projects,RecruitLang recruitLang) {
+    	projectsMapper.updateProject(projects);
+    	changeRecruitMember(projects.getProjectId(), recruitLang);	
+    }
+    
+    /** 募集人数変更*/
+    public void changeRecruitMember(int projectId,RecruitLang recruitLang) {
+    	recruitLang.setProjectId(projectId);
+    	recruitLangMapper.changeRecruitMember(recruitLang);
+    }	
+    
 }

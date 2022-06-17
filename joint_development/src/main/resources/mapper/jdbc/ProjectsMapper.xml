@@ -43,6 +43,14 @@
         insert into projects(user_id,post_date,team_name,content,content_detail,start_date,end_date,frequency_month_or_week,frequency_day)
         values (#{userId},CURRENT_DATE,#{teamName},#{content},#{contentDetail},#{startDate},#{endDate},#{frequencyMonthOrWeek},#{frequencyDay})
     </insert>
+    
+    <!-- プロジェクト 1件アップデート -->
+    <update id ="updateProject" useGeneratedKeys="true" keyProperty="projectId">
+        update projects set team_name = #{teamName},content=#{content},
+        content_detail=#{contentDetail},start_date=#{startDate},end_date=#{endDate},
+        frequency_month_or_week=#{frequencyMonthOrWeek},frequency_day=#{frequencyDay}
+        where project_id=#{projectId}
+    </update>
 
     <!-- プロジェクト概要-->
     <select id="findProjectList" resultMap="project">
@@ -60,7 +68,7 @@
     <!-- プロジェクト詳細1件取得 -->
     <select id="findDetailProject" resultMap="project">
         select 
-        projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,
+        projects.project_id,projects.user_id,projects.post_date,projects.team_name,projects.content,projects.content_detail,
         projects.start_date,projects.end_date,projects.frequency_month_or_week,projects.frequency_day,
         recruitLang.lang_cl as recruit_lang_cl,recruitLang.lang_web as recruit_lang_web,
         recruitLang.lang_fr as recruit_lang_fr,recruitLang.lang_ml as recruit_lang_ml,

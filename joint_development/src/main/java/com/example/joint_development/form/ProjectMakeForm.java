@@ -9,7 +9,7 @@ public class ProjectMakeForm {
     @NotBlank
     private String userId;
     @NotBlank
-    private int projectId;
+    private String projectId;
     @NotBlank
     private String teamName;
     @NotBlank

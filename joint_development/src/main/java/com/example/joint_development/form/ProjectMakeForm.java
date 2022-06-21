@@ -9,6 +9,8 @@ public class ProjectMakeForm {
     @NotBlank
     private String userId;
     @NotBlank
+    private int projectId;
+    @NotBlank
     private String teamName;
     @NotBlank
     private String content;

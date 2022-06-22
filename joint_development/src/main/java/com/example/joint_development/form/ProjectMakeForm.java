@@ -1,15 +1,16 @@
 package com.example.joint_development.form;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 @Data
 public class ProjectMakeForm {
     
-    @NotBlank
-    private String userId;
-    @NotBlank
-    private String projectId;
+    @NotNull
+    private Integer userId;
+    @NotNull
+    private Integer projectId;
     @NotBlank
     private String teamName;
     @NotBlank

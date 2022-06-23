@@ -1,11 +1,13 @@
 package com.example.joint_development.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.joint_development.domain.OtherAvailableLang;
 import com.example.joint_development.domain.Team;
 import com.example.joint_development.domain.UserDetail;
 import com.example.joint_development.repository.UserDetailMapper;
@@ -18,12 +20,26 @@ public class UserDetailService {
 
     /** ユーザー登録 */
     public int setUser(UserDetail user){
-        return mapper.insertOne(user);
+        if (mapper.confirmUser(user.getEmail())!=null) {
+            return 2;
+        }
+        mapper.insertOne(user);
+        if (user.getOtherAvailableLang()!=null) {
+            insertLang(user);            
+        }
+        return 0;
     }
     
     /** 募集言語登録 */
-	public void insertLang(Integer userId,String lang) {
-		mapper.insertLang(userId,lang);
+	public void insertLang(UserDetail user) {
+        List<OtherAvailableLang> otherAvailableLangs=new ArrayList<>();
+        for (String otherLang : user.getOtherAvailableLang()) {
+            OtherAvailableLang oaLang=new OtherAvailableLang();
+            oaLang.setUserId(user.getUserId());
+            oaLang.setOtherAvailableLang(otherLang);
+            otherAvailableLangs.add(oaLang);
+        }
+		mapper.insertLang(otherAvailableLangs);
 	}
 
     /** ユーザー取得（1件） */
@@ -46,6 +62,16 @@ public class UserDetailService {
     /** ログインユーザー取得 */
     public UserDetail getLoginUser(String email, String password){
         return mapper.findLoginUser(email, password);
+    }
+
+    /** マイページ編集 */
+    public void profileEdit(UserDetail userDetail){
+        mapper.profileEdit(userDetail);
+        if (userDetail.getOtherAvailableLang().size() !=0) {
+            mapper.deleteUserLang(userDetail.getUserId());
+            //* 言語追加機能 */
+            insertLang(userDetail);
+        }
     }
 
 

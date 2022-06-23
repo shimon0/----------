@@ -30,15 +30,24 @@
         values (#{name},#{email},#{password},#{joiningDate},#{engineerKinds},#{experience},#{introduction})
     </insert>
     
-    <insert id ="insertLang">
-    	insert into otheravailablelang(user_id,lang)
-    	values(#{userId},#{lang})
+    <insert id ="insertLang" parameterType="java.util.List">
+        insert 
+        into otheravailablelang(user_id,lang)
+        values
+        <foreach collection="oList" item="oList" separator=",">
+            (#{oList.userId},#{oList.otherAvailableLang})            
+        </foreach>
     </insert>
 
 
     <!-- ログインユーザー取得-->
-    <select id="findLoginUser" resultType="UserDetail">
-        select user_id,name from users where email = #{email} AND password = #{password}
+    <select id="findLoginUser" resultType="int">
+        select user_id from users where email = #{email} AND password = #{password}
+    </select>
+
+    <!-- email重複確認 -->
+    <select id="confirmUser" resultType="UserDetail">
+        select user_id,name from users where email = #{email}
     </select>
 
     <!-- ユーザー複数件取得-->
@@ -81,4 +90,18 @@
 		from belongs b JOIN projects p USING(project_id) 
 		where b.user_id=#{userId} AND b.status='belongs'
     </select>
+
+    <!-- マイページ編集 -->
+    <update id="profileEdit">
+        update users 
+        set
+        (name,engineer_kinds,experience,introduction)
+        = (#{name},#{engineerKinds},#{experience},#{introduction})
+        where user_id=#{userId}
+    </update>
+
+    <!--  使用可能言語削除 -->
+    <delete id="deleteUserLang">
+        delete from otheravailablelang where user_id=#{userId}
+    </delete> 
 </mapper>

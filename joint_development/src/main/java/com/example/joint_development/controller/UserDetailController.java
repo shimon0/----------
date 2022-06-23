@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.joint_development.domain.LoginUser;
 import com.example.joint_development.domain.Team;
 import com.example.joint_development.domain.UserDetail;
+import com.example.joint_development.form.ProfileEditForm;
 import com.example.joint_development.form.UserDetailForm;
 import com.example.joint_development.service.UserDetailService;
 
@@ -62,15 +64,7 @@ public class UserDetailController {
         }
     	UserDetail user = modelMapper.map(form, UserDetail.class);
 		// ユーザー登録
-		userService.setUser(user);
-		// 言語登録
-		if(user.getOtherAvailableLang()!= null) {
-			for(String lang : user.getOtherAvailableLang()) {
-				userService.insertLang(user.getUserId(),lang);
-			}
-		}
-		
-		return 0;
+		return userService.setUser(user);
 
 	}
     
@@ -83,8 +77,6 @@ public class UserDetailController {
 		 * if(result.hasErrors()) { //入力値エラーの際の処理を書く
 		 * System.out.println("ログインできませんでした。"); return 1; }
 		 */
-    	
-    	
     	
     	//loginUser.setEmail(email);
     	//loginUser.setPassword(password);
@@ -102,5 +94,18 @@ public class UserDetailController {
     	System.out.println(user.getName());
     	//session.setAttribute("user", user);
     	return user;
-    }   
+    }
+	/**
+	 * マイページ編集機能
+	 * @param form
+	 * @return 
+	 * 正常　0
+	 * 処理エラー 2
+	 */
+	@PatchMapping("/profileEdit")
+	public int profileEdit(@RequestBody ProfileEditForm form){
+		UserDetail userDetail=modelMapper.map(form, UserDetail.class);
+		userService.profileEdit(userDetail);
+		return 0;
+	}
 }

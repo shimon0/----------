@@ -15,7 +15,6 @@ import com.example.joint_development.domain.Projects;
 import com.example.joint_development.domain.RecruitLang;
 import com.example.joint_development.form.ProjectMakeForm;
 import com.example.joint_development.service.ProjectsService;
-import com.example.joint_development.service.RecruitLangService;
 
 @RestController
 @CrossOrigin
@@ -24,9 +23,6 @@ public class MakeProjectController {
 
 	@Autowired
 	private ProjectsService projectsService;
-
-	@Autowired
-	private RecruitLangService recruitLangService;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -47,9 +43,7 @@ public class MakeProjectController {
 		Projects projects = modelMapper.map(form, Projects.class);
 		RecruitLang recruitLang = modelMapper.map(form, RecruitLang.class);
 
-		projectsService.makeProject(projects);
-		recruitLang.setProjectId(projects.getProjectId());
-		recruitLangService.recruitLangCount(recruitLang);
+		projectsService.makeProject(projects,recruitLang);
 
 		return 0;
 	}

@@ -26,8 +26,10 @@ public class ProjectsService {
     private BelongsMapper belongsMapper;
 
     /** プロジェクト作成 */
-    public void makeProject(Projects projects){
+    public void makeProject(Projects projects,RecruitLang recruitLang){
         projectsMapper.makeProject(projects);
+        recruitLang.setProjectId(projects.getProjectId());
+        recruitLangMapper.recruitLangCount(recruitLang);
         belongsMapper.newProjectReader(projects.getUserId(), projects.getProjectId());
     }
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.joint_development.domain.Projects;
 import com.example.joint_development.domain.RecruitLang;
+import com.example.joint_development.repository.BelongsMapper;
 import com.example.joint_development.repository.ProjectsMapper;
 import com.example.joint_development.repository.RecruitLangMapper;
 
@@ -21,9 +22,13 @@ public class ProjectsService {
     @Autowired
     private RecruitLangMapper recruitLangMapper;
 
+    @Autowired
+    private BelongsMapper belongsMapper;
+
     /** プロジェクト作成 */
-    public int makeProject(Projects projects){
-        return projectsMapper.makeProject(projects);
+    public void makeProject(Projects projects){
+        projectsMapper.makeProject(projects);
+        belongsMapper.newProjectReader(projects.getUserId(), projects.getProjectId());
     }
 
     /** プロジェクト概要一覧取得 */

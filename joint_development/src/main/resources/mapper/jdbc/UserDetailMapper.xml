@@ -41,7 +41,7 @@
 
 
     <!-- ログインユーザー取得-->
-    <select id="findLoginUser" resultType="int">
+    <select id="findLoginUser" resultType="UserDetail">
         select user_id from users where email = #{email} AND password = #{password}
     </select>
 
